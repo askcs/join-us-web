@@ -1,0 +1,443 @@
+
+      
+    <!-- <h1>TreeGrid Demo - drag and drop</h1>
+    <p>Assign files to folders by dragging them to a folder.
+    Keep Ctrl down to select multiple files, 
+    or Shift to select a range of files.</p>
+    <table id="main">
+      <tr>
+        <th>Uncategorized files</th>
+        <th>Folders</th>
+      </tr>      
+      <tr>
+        <td id="files"></td>
+        <td id="folders"></td>
+      </tr>
+    </table> -->
+
+
+<div class="page-header">
+  <h2 ng-hide="views.add || views.member">{{group.name}}</h2>
+  <h2 ng-show="views.add">{{ui.groups.newGroup}}</h2>
+  <h2 ng-show="views.member">{{ui.groups.newMember}}</h2>
+
+  <!-- groups buttons -->
+  <div class="btn-group pull-right">
+    <button type="button" 
+            ng-click="addGroupForm(); setViewTo('add')"
+            class="btn btn-success {{(views.add==true) && 'active'}}">{{ui.groups.newGroup}}</button>
+    <button type="button" 
+            ng-click="newMemberForm(); setViewTo('member')" 
+            class="btn btn-success {{(views.member==true) && 'active'}}">{{ui.groups.newMember}}</button>
+  </div>
+  <!-- end groups buttons -->
+
+  <!-- search members -->
+  <form class="form-search pull-right" 
+        ng-submit="searchMembers(search.query)">
+    <div class="input-append">
+      <input type="text" 
+              class="span2 search-query" 
+              placeholder="{{ui.groups.searchfor}}" 
+              ng-model="search.query">
+      <button type="submit" class="btn"><i class="icon-search"></i>&nbsp;{{ui.groups.serach}}</button>
+    </div>
+  </form>
+  <!-- end search members -->
+</div>
+
+<!-- groups and members -->
+<div class="tabbable tabs-left">
+
+  <!-- tabs links -->
+  <ul class="nav nav-tabs nav-tabs-app" style="margin-right: 0px;">
+    <!-- add group tab link -->
+    <li class="{{(views.add==true) && 'active'}}"
+        ng-show="views.add">
+      <a href="#addGroupTab" 
+          ng-click="setViewTo('add')" 
+          data-toggle="tab">
+        <span class="entypo">&#9998;</span>
+        {{ui.groups.addNewGroup}}
+      </a>
+    </li>
+    <!-- end add group tab link -->
+    <!-- edit group tab link -->
+    <li class="{{(views.edit==true) && 'active'}}"
+        ng-show="views.edit">
+      <a href="#editGroupTab" 
+          ng-click="setViewTo('edit')" 
+          data-toggle="tab">
+        <span class="entypo">&#9998;</span>
+        {{ui.groups.editGroup}}
+      </a>
+    </li>
+    <!-- end edit group tab link -->
+    <!-- new member tab link -->
+    <li class="{{(views.member==true) && 'active'}}"
+        ng-show="views.member">
+      <a href="#newMemberTab" 
+          ng-click="setViewTo('member')" 
+          data-toggle="tab">
+        <span class="entypo">&#59136;</span>
+        {{ui.groups.newMember}}
+      </a>
+    </li>
+    <!-- new member tab link -->
+    <!-- search tab link -->
+    <li class="{{(views.search==true) && 'active'}}"
+        ng-show="views.search">
+      <a href="#searchTab" 
+          ng-click="setViewTo('search')"
+          data-toggle="tab">
+        <span class="entypo">&#128269;</span>
+        {{ui.groups.searchResults}}
+      </a>
+    </li>
+    <!-- end search tab link -->
+    <!-- group tab links -->
+    <li id="groupTabLink" 
+        class="{{(views.view==true) && 'active'}}">
+      <a href="#groupTab" 
+          data-toggle="tab"
+          ng-click="setViewTo('view')">
+          <span class="entypo">&#128101;</span> 
+        {{ui.groups.groups}}
+      </a>
+    </li>
+    <!-- end group tab links -->
+  </ul>
+  <!-- end tabs links -->
+
+  <!-- tabs content -->
+  <div class="tab-content">
+
+    <!-- add group tab -->
+    <div class="tab-pane {{(views.add==true) && 'active'}}" 
+          id="addGroupTab" 
+          ng-show="views.add">
+        <div class="tab-header">
+          <h3 class="pull-left">{{ui.groups.addNewGroup}}</h3>
+          <button type="button" 
+                  ng-click="closeTabs()" 
+                  class="btn pull-right">{{ui.groups.close}}</button>
+        </div>
+        <hr>
+        <!-- group form -->
+        <form>
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.name}}</label>
+              <div class="controls">
+                <input type="text" 
+                    class="span4" 
+                    ng-model="groupForm.name">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" 
+                      ng-click="groupSubmit(groupForm)" 
+                      class="btn btn-success">{{ui.groups.saveGroup}}</button>
+            </div>
+          </fieldset>
+        </form>
+        <!-- end group form -->
+    </div>
+    <!-- end add group tab -->
+
+    <!-- edit group tab -->
+    <div class="tab-pane {{(views.edit==true) && 'active'}}" 
+          id="editGroupTab" 
+          ng-show="views.edit">
+        <div class="tab-header">
+          <h3 class="pull-left">{{ui.groups.editGroup}}</h3>
+          <button type="button" 
+                  ng-click="closeTabs()" 
+                  class="btn pull-right">{{ui.groups.close}}</button>
+        </div>
+        <hr>
+        <!-- group form -->
+        <form>
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.name}}</label>
+              <div class="controls">
+                <input type="text" 
+                    class="span4" 
+                    ng-model="groupForm.name">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" 
+                      ng-click="groupSubmit(groupForm)" 
+                      class="btn btn-success">{{ui.groups.saveGroup}}</button>
+            </div>
+          </fieldset>
+        </form>
+        <!-- end group form -->
+    </div>
+    <!-- edit group tab -->
+
+    <!-- new member tab -->
+    <div class="tab-pane {{(views.member==true) && 'active'}}" 
+          id="newMemberTab" 
+          ng-show="views.member">
+        <div class="tab-header">
+          <h3 class="pull-left">{{ui.groups.registerMember}}</h3>
+          <button type="button" 
+                  ng-click="closeTabs()" 
+                  class="btn pull-right">{{ui.groups.close}}</button>
+        </div>
+        <hr>
+        <!-- member form -->
+        <form>
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.role}}</label>
+              <div class="controls">
+                <select ng-model="memberForm.role"
+                        ng-options="role.label for role in roles">
+                  <option value="">{{ui.groups.selectRole}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.groups}}</label>
+              <div class="controls">
+                <select data-placeholder=" " 
+                        multiple 
+                        class="chzn-select" 
+                        style="width:530px" 
+                        chosen
+                        ng-model="memberForm.groups" 
+                        ng-options="group.name for group in data.groups">
+                </select>
+                <!-- <p ng-repeat="group in memberForm.groups"><strong>{{group.uuid}}</strong></p> -->
+              </div>
+            </div>
+            <hr>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.name}}</label>
+              <div class="controls">
+                <input  type="text" 
+                        class="span4" 
+                        ng-model="memberForm.name">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.email}}</label>
+              <div class="controls">
+                <input  type="text" 
+                        class="span4" 
+                        ng-model="memberForm.EmailAddress">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.phone}}</label>
+              <div class="controls">
+                <input  type="text" 
+                        class="span3" 
+                        ng-model="memberForm.PhoneAddress">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.address}}</label>
+              <div class="controls">
+                <input  type="text" 
+                        class="span5" 
+                        ng-model="memberForm.PostAddress">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.postCode}}</label>
+              <div class="controls">
+                <input  type="text" 
+                        class="span2" 
+                        ng-model="memberForm.PostZip">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.city}}</label>
+              <div class="controls">
+                <input  type="text" 
+                        class="span3" 
+                        ng-model="memberForm.PostCity">
+              </div>
+            </div>
+            <hr>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.userName}}</label>
+              <div class="controls">
+                <input  type="text" 
+                        class="span3" 
+                        ng-model="memberForm.username">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">{{ui.groups.password}}</label>
+              <div class="controls">
+                <input  type="password" 
+                        class="span3" 
+                        ng-model="memberForm.password">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" 
+                  ng-click="memberSubmit(memberForm)" 
+                  class="btn btn-success">{{ui.groups.saveMember}}</button>
+            </div>
+          </fieldset>
+        </form>
+        <!-- end member form -->
+    </div>
+    <!-- end new member tab -->
+
+    <!-- search tab -->
+    <div class="tab-pane {{(views.search==true) && 'active'}}" id="searchTab" ng-show="views.search">
+      <div class="tab-header">
+        <h3 class="pull-left">{{ui.groups.serachFor}} '{{search.queried}}'</h3>
+        <button type="button" 
+                ng-click="closeTabs()" 
+                class="btn pull-right">{{ui.groups.close}}</button>
+      </div>
+      <hr>
+      <p ng-hide="candidates.length > 0">{{ui.groups.sorryCanNotFind}}</p>
+      <div ng-show="candidates.length > 0">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>{{ui.groups.name}}</th>
+              <th>{{ui.groups.groups}}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="candidate in candidates">
+              <td>{{$index + 1}}</td>
+              <td>{{candidate.name}}</td>
+              <td>
+                <span ng-repeat="group in candidate.groups">
+                  <a ng-click="requestGroup(group.uuid, true)">{{group.name}}</a>,
+                </span>
+              </td>
+              <td>
+                <select style="margin:0; width: 160px;" 
+                        ng-model="candidate.group" 
+                        ng-options="group.name for group in data.groups">
+                  <option value="">{{ui.groups.selectGroup}}</option>
+                </select>
+                <button style="margin-left: 5px;" 
+                        ng-click="addMember(candidate)" 
+                        class="btn btn-success btn-small">{{ui.groups.addToGroup}}</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- <button type="button" 
+                ng-click="addMembers()" 
+                class="btn btn-success btn-small pull-left">{{ui.groups.addMemberToGroup}}</button> -->
+                
+        <span class="muted pull-right">
+          <small><i>{{candidates.length | i18n_spec:'groups.resultCount'}}</i></small>
+        </span>
+      </div>
+    </div>
+    <!-- end search tab -->
+
+    <!-- group tab -->
+    <div  class="tab-pane {{(views.view==true) && 'active'}}"
+          id="groupTab">
+      <div class="tab-header">
+        <!-- groups list -->
+        <div class="pull-left">
+          <select ng-model="current" 
+                  ng-options="group.uuid as group.name for group in groups"
+                  ng-selected="current"
+                  ng-change="requestGroup(current)">
+          </select>
+        </div>
+        <!-- end groups list -->
+        <div class="pull-right">
+
+          <input type="text" 
+                  class="span2 search-query" 
+                  placeholder="{{ui.groups.filterMembers}}" 
+                  style="margin-right:5px"
+                  ng-model="filtered">
+
+          <button type="button"
+                  class="btn"
+                  style="margin-right:5px"
+                  bs-popover="'dist/views/groups-wish.html'" 
+                  data-placement="bottom"
+                  data-title="Behoefte wijzigen"><span class="badge badge-inset" ng-show="wished">{{wish}}</span>&nbsp;{{ui.groups.requiredPeople}}</button>
+
+          <button type="button" 
+                  ng-click="editGroup(group)" 
+                  style="margin-right:5px"
+                  class="btn"><i class="icon-edit"></i>&nbsp;{{ui.groups.editGroup}}</button>
+          <button type="button" 
+                  ng-click="deleteGroup(group.uuid)" 
+                  class="btn btn-danger"><i class="icon-trash icon-white"></i>&nbsp;{{ui.groups.deleteGroup}}</button>
+
+        </div>
+      </div>
+      <hr>
+
+      <p ng-hide="(data.members[group.uuid]|filter:filtered).length > 0">
+        {{ui.groups.noMembers}}
+      </p>
+      <div ng-show="(data.members[group.uuid]|filter:filtered).length > 0">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox"
+                        ng-model="selectionMaster"
+                        ng-click="toggleSelection(group, selectionMaster)">
+              </th>
+              <th><a ng-click="sorter='name'">{{ui.groups.name}}</a></th>
+              <th><a ng-click="sorter='resources.role'">{{ui.groups.role}}</a></th>
+              <th><a ng-click="sorter='resources.phoneAddress'">{{ui.groups.tel}}</a></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="member in data.members[group.uuid]|filter:filtered|orderBy:sorter:true">
+              <td>
+                <input type="checkbox"
+                        ng-model="selection[member.uuid]"
+                        ng-checked="selectionMaster">
+              </td>
+              <td><a href="#/profile/{{member.uuid}}#profile">{{member.name}}</a></td>
+              <td>{{member.resources.role|translateRole}}</td>
+              <td>{{member.resources.PhoneAddress}}</td>
+              <td>
+                <div class="pull-right">
+                  <a href="#/profile/{{member.uuid}}#edit" 
+                    class="btn btn-mini"><i class="icon-edit"></i></a>&nbsp;
+                  <button type="submit" 
+                          ng-click="removeMember(member.uuid, group.uuid)" 
+                          class="btn btn-danger btn-mini"><i class="icon-trash icon-white"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="button" 
+                ng-click="removeMembers(selection, group)" 
+                class="btn btn-small btn-danger pull-left">
+                <i class="icon-trash icon-white"></i>&nbsp;{{ui.groups.removeSelectedMembers}}</button>
+        <span class="muted pull-right">
+          <small><i>{{(data.members[group.uuid]|filter:filtered).length | i18n_spec:'groups.memberCount'}}</i></small>
+        </span>
+      </div>
+    </div>
+    <!-- end group tab -->
+
+  </div>
+  <!-- end tabs content -->
+</div>
+<!-- end groups and members -->

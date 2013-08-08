@@ -1,0 +1,811 @@
+<!--<div class="page-header">-->
+  <!--<h2>{{ui.message.messages}}</h2>-->
+<!--</div>-->
+
+<!-- inboxes -->
+<div class="row-fluid">
+  <div class="tabbable tabs-left">
+
+
+
+
+    <!-- tabs -->
+    <ul class="nav nav-tabs nav-tabs-app" style="margin-right: 0px;">
+
+        <li class="{{(views.notifications==true || views.scheaduler==true) && 'active'}}">
+            <a href="#notificationsTab"
+               data-toggle="tab"
+               ng-click="resetViews(); setViewTo('notifications')">
+                <span class="entypo">&#128276;</span> {{ui.message.notifications}}
+            </a>
+        </li>
+
+      <li class="{{(views.compose==true) && 'active'}}" ng-show="views.compose">
+        <a href="#composeTab" 
+            data-toggle="tab"
+            ng-click="setViewTo('compose')">
+          <span class="entypo">&#9998;</span> {{ui.message.compose}}
+        </a>
+      </li>
+
+      <li class="{{(views.message==true) && 'active'}}"  ng-show="views.message">
+        <a href="#viewTab" 
+            data-toggle="tab"
+            ng-click="">
+          <span class="entypo">&#128196;</span> {{ui.message.message}}
+        </a>
+      </li>
+
+      <li class="{{(views.inbox==true) && 'active'}}">
+        <a href="#inboxTab" 
+            data-toggle="tab"
+            ng-click="resetViews(); setViewTo('inbox')">
+          <span class="entypo">&#128229;</span> {{ui.message.inbox}}
+        </a>
+      </li>
+
+      <li class="{{(views.outbox==true ) && 'active'}}">
+        <a href="#outboxTab"   
+            data-toggle="tab"
+            ng-click="resetViews(); setViewTo('outbox')">
+          <span class="entypo">&#128228;</span> {{ui.message.outbox}}
+        </a>
+      </li>
+
+      <li class="{{(views.trash==true ) && 'active'}}">
+        <a href="#trashTab" 
+            data-toggle="tab"
+            ng-click="resetViews(); setViewTo('trash')">
+          <span class="entypo">&#9749;</span> {{ui.message.trash}}
+        </a>
+      </li>
+
+    </ul>
+    <!-- end tabs -->
+
+
+
+
+    <!-- tabs content -->
+    <div class="tab-content">
+
+
+
+
+
+
+
+
+
+
+      
+      <!-- composeTab -->
+      <div class="tab-pane {{(views.compose == true || views.scheaduler == true) && 'active'}}" 
+            id="composeTab" 
+            ng-show="views.compose || views.scheaduler">
+        
+        <div class="tab-header">
+
+          <h3 class="pull-left">
+
+            <span ng-hide="views.scheaduler">{{ui.message.composeMessage}}</span>
+
+            <span ng-show="views.scheaduler">{{scheaduled.title | toTitleCase}}</span>
+
+          </h3>
+
+          <button type="submit" 
+                  ng-click="(origin=='inbox'); closeTabs()" 
+                  class="btn pull-right">{{ui.message.close}}</button>
+        </div>
+
+        <hr>
+
+        <!-- compose form -->
+        <form ng-controller="scheaduler">
+          <fieldset>
+
+            <!-- broadcasting types -->
+            <div class="control-group">
+              <label class="control-label">{{ui.message.broadcast}}</label>
+
+              <div  class="btn-group"  
+                    bs-buttons-checkbox="" 
+                    data-toggle="buttons-checkbox">
+
+                <button type="button" 
+                        class="btn btn-small" 
+                        ng-model="broadcast.sms" 
+                        ng-click=""
+                        bs-button=""
+                        ng-hide="app.resources.role > 2">{{ui.message.sms}}</button>
+
+                <button type="button" 
+                        class="btn btn-small" 
+                        ng-model="broadcast.email" 
+                        ng-click=""
+                        bs-button="">{{ui.message.email}}</button>
+
+              </div>
+            </div>
+            <!-- end broadcasting types -->
+
+            <!-- receivers -->
+            <div class="control-group">
+              <label class="control-label">{{ui.message.receviers}}</label>
+              <!-- {{ui.message.chooseRecept}} -->
+
+              <select data-placeholder=" " 
+                      multiple 
+                      class="chzn-select" 
+                      style="width:530px" 
+                      chosen
+                      ng-model="message.receivers" 
+                      ng-options="receiver.name group by receiver.group for receiver in receviersList | orderBy:'name'">
+              </select>
+              <!-- <p ng-repeat="receiver in message.receivers"><strong>Chosen: {{receiver.id}}</strong></p> -->
+              <!-- <p ng-repeat="receiver in recipients"><strong>Recipients: {{receiver}}</strong></p> -->
+            </div>
+            <!-- end receivers -->
+
+            <!-- subject -->
+            <div class="control-group">
+              <label class="control-label">{{ui.message.subject}}</label>
+              <input type="text" 
+                      class="span5"
+                      ng-model="message.subject"
+                      placeholder="{{ui.message.typeSubject}}">
+            </div>
+            <!-- end subject -->
+
+            <!-- message -->
+            <div class="control-group">
+              <label class="control-label">{{ui.message.message}}</label>
+              <textarea rows="7" 
+                        class="span7"
+                        ng-model="message.body"></textarea>
+            </div>
+            <!-- end subject -->
+
+            <!-- scheadulerPane toggle -->
+            <div class="control-group" ng-hide="scheadulerPane">
+              <label class="control-label">{{ui.message.repeat}}</label>
+
+              <div  class="btn-group"  
+                    bs-buttons-checkbox="" 
+                    data-toggle="buttons-checkbox">
+
+                <button type="button" 
+                        class="btn btn-small" 
+                        ng-model="scheadulerPane" 
+                        ng-click="scheadulerPane == !scheadulerPane"
+                        bs-button="">{{ui.message.repeatOn}}</button>
+
+              </div>
+            </div>
+            <!-- end scheaduler toggle -->
+
+            <!-- scheaduler -->
+            <section id="scheaduler-pane" ng-show="scheadulerPane">
+
+              <!-- scheaduler header -->
+              <header>
+                <h4>{{ui.message.repeat}}</h4>
+                <div class="pull-right">
+                  <button type="button" class="btn btn-small" ng-click="scheadulerPane = false" ng-hide="views.scheaduler">{{ui.message.repeatOff}}</button>
+                  <button type="button" class="btn btn-small btn-success" ng-click="addNewOffset()">{{ui.message.repeatNew}}
+                  </button>
+                </div>
+              </header>
+              <!-- end scheaduler header -->
+
+              <hr>
+
+              <!-- notification title -->
+              <div class="control-group">
+                <label class="control-label">{{ui.message.notificationLabel}}</label>
+
+                <input type="text" 
+                      class="span6"
+                      ng-model="scheaduled.title"
+                      placeholder="{{ui.message.notificationLabel}}">
+
+              </div>
+              <!-- end notification title -->
+
+              <!-- no notifications -->
+              <div class="control-group" ng-hide="scheaduleCount > 0">
+                <label class="control-label">{{ui.message.notifications}}</label>
+                <p class="muted"><small><i>{{ui.message.notificationsEmpty}}</i></small></p>
+              </div>
+              <!-- end no notifications -->
+
+              <!-- notifications list -->
+              <div class="control-group" ng-show="scheaduleCount > 0">
+                <label class="control-label">{{ui.message.notifications}}</label>
+
+                <!-- <span style="font-size:11px" ng-repeat="o in offsets"> {{o}}<br></span> -->
+
+                <!-- notification items -->
+                <notification-item ng-repeat="offset in scheaduled.offsets" scheadule="offset" remover="remover()">
+                </notification-item>
+                <!-- end notification items -->
+
+              </div>
+              <!-- end notifications list -->
+
+              <!-- scheaduler status -->
+              <div class="control-group">
+                <label class="control-label">{{ui.message.notificationStatus}}</label>
+                
+                <!-- status toggler -->
+                <div  class="btn-group" 
+                      data-toggle="buttons-radio">
+
+                  <button type="button" 
+                          class="btn btn-small {{(scheaduled.status) && 'active'}}" 
+                          ng-model="scheaduled.status" 
+                          ng-click="scheaduled.status = true">{{ui.message.repeatOn}}</button>
+
+                  <button type="button" 
+                          class="btn btn-small {{(!scheaduled.status) && 'active'}}" 
+                          ng-model="scheaduled.status" 
+                          ng-click="scheaduled.status = false">{{ui.message.repeatOff}}</button>
+
+                </div>
+                <!-- end status toggler -->
+
+                <!-- status indicator -->
+                <div style="margin-left: 10px; display: inline;">
+                  <span class="label label-success" ng-show="scheaduled.status">{{ui.message.enabled}}</span>
+                  <span class="label" ng-hide="scheaduled.status">{{ui.message.disabled}}</span>
+                </div>
+                <!-- end status indicator -->
+
+              </div>
+              <!-- end scheaduler status -->
+
+            </section>
+            <!-- end scheaduler -->
+
+            <!-- compose form actions -->
+            <div class="form-actions">
+
+              <!-- scheadular action buttons -->
+              <div ng-show="scheadulerPane">
+                <button type="submit" 
+                        ng-hide="scheaduleCount > 0"
+                        class="btn btn-success disabled">{{ui.message.notificationSave}}</button>
+
+                <button type="submit" 
+                        ng-click="scheaduler.save(message, broadcast, scheaduled)" 
+                        ng-show="scheaduleCount > 0"
+                        class="btn btn-success">{{ui.message.notificationSave}}</button>
+              </div>
+              <!-- end scheadular action buttons -->
+
+              <!-- message action buttons -->
+              <button type="submit" 
+                      ng-hide="scheadulerPane" 
+                      ng-click="send(message, broadcast)" 
+                      class="btn btn-success">{{ui.message.sendMessage}}</button>
+              <!-- end message action buttons -->
+
+            </div>
+            <!-- end compose form actions -->
+
+          </fieldset>
+        </form>
+        <!-- end compose form -->
+
+      </div>
+      <!-- end composeTab -->
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- viewTab -->
+      <div class="tab-pane {{(views.message==true) && 'active'}}" id="viewTab" ng-show="views.message">
+        <div class="tab-header">
+          <h3 class="pull-left">{{message.subject}}</h3>
+          <div class="pull-right">
+            <button type="button" 
+                    ng-click="closeTabs()" 
+                    class="btn">{{ui.message.close}}</button>
+          </div>
+        </div>
+        <hr>
+        <!-- message view -->
+        <dl>
+          <dt>{{ui.message.sender}}</dt>
+            <dd>{{message.requester|convertEve|convertUserIdToName}} </dd>
+          <dt>{{ui.message.receviers}}</dt>
+            <dd>
+              <span ng-repeat="receiver in message.responder">
+                {{receiver|convertEve|convertUserIdToName}}, 
+              </span>
+            </dd>
+          <dt>{{ui.message.date}}</dt>
+            <dd>{{message.creationTime | nicelyDate}}</dd>
+          <dt>{{ui.message.questionText}}</dt>
+            <dd>{{message.question_text}}</dd>
+        </dl>
+        <!-- end message view -->
+        <form>
+          <fieldset>
+            <div class="form-actions">
+              <button type="button" 
+                      ng-click="reply(message)"
+                      class="btn btn-success">{{ui.message.reply}}</button>
+              &nbsp;
+              <button type="button" 
+                      ng-click="removeMessage(message.uuid)"
+                      class="btn btn-danger">{{ui.message.del}}</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <!-- end viewTab -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- inboxTab -->
+      <div class="tab-pane {{(views.inbox==true) && 'active'}}" id="inboxTab">
+
+        <div class="tab-header">
+          <h3 class="pull-left">{{ui.message.inbox}}</h3>
+            <!-- compose buttons -->
+            <div class="btn-group pull-right">
+                <button type="submit"
+                        ng-click="composeMessage(); setViewTo('compose')"
+                        class="btn btn-success {{(views.compose==true) && 'active'}}">{{ui.message.composeAMessage}}</button>
+            </div>
+            <!-- end compose buttons -->
+            <!-- filter messages -->
+          <form class="pull-right">
+            <input type="text" 
+                    class="span12 search-query" 
+                    placeholder="{{ui.message.ph_filterMessage}}" 
+                    ng-model="query.inbox">
+          </form>
+          <!-- end filter messages -->
+
+
+
+          <!-- <div class="btn-group pull-right">
+            <button class="btn btn-danger" ng-click="clean.inbox()">Inbox</button>
+            <button class="btn btn-danger" ng-click="clean.outbox()">Outbox</button>
+            <button class="btn btn-danger" ng-click="clean.trash()">Trash</button>
+          </div> -->
+
+        </div>
+
+        <hr>
+
+        <p ng-hide="(messages.inbox[page.inbox] | filter:query.inbox).length > 0">{{ui.message.noMessage}}</p>
+        
+        <!-- inbox listing -->
+        <div ng-show="(messages.inbox[page.inbox] | filter:query.inbox).length > 0">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox"
+                          ng-model="selectionMaster.inbox"
+                          ng-click="toggleSelection(messages.inbox[page.inbox], 'inbox', selectionMaster.inbox)">
+                </th>
+                <th width="60"></th>
+                <th>{{ui.message.from}}</th>
+                <th>{{ui.message.subject}}</th>
+                <th>{{ui.message.date}}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="message in messages.inbox[page.inbox] | filter:query.inbox | orderBy:'creationTime':true">
+                <td>
+                  <input type="checkbox"
+                          ng-model="selection.inbox[message.uuid]"
+                          ng-checked="selection.inbox[message.uuid]">
+                          <!-- ng-checked="selectionMaster.inbox"> -->
+                </td>
+                <td><span class="label label-warning" ng-show="(message.state=='NEW')">{{ui.message.newMsg}}</span></td>
+                <td>{{message.requester | convertEve | convertUserIdToName}}</td>
+                <td><a ng-click="requestMessage(message.uuid, 'inbox')">{{message.subject}}</a></td>
+                <td>{{message.creationTime | nicelyDate}}</td>
+                <td>
+                  <div class="pull-right">
+                    <button class="btn btn-mini"
+                            ng-click="reply(message)"><i class="icon-share-alt"></i></button>&nbsp;
+                    <button type="submit" 
+                            ng-click="removeMessage(message.uuid)" 
+                            class="btn btn-danger btn-mini"><i class="icon-trash icon-white"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="button" 
+                  ng-click="removeMessages(selection.inbox)" 
+                  class="btn btn-small btn-danger pull-left">
+                  <i class="icon-trash icon-white"></i> {{ui.message.deleteSelected}}</button>
+
+          <div class="btn-toolbar pull-right" style="margin: 0;">
+            <div class="btn-group">
+              <button class="btn btn-small {{(page.inbox == 0) && 'disabled'}}" 
+                      ng-click="paginate.before('inbox')">« {{ui.message.paginationPrevious}}
+              </button>
+              <button class="btn btn-small {{(page.inbox + 1 == messages.inbox.length) && 'disabled'}}" 
+                      ng-click="paginate.next('inbox')">{{ui.message.paginationNext}} »
+              </button>
+            </div>
+          </div>
+
+          <br><br>
+
+          <span class="muted pull-right">
+            <!-- <small>
+              <i>Page: {{page.inbox + 1}} of {{messages.inbox.length}}, {{(messages.inbox | filter:query.inbox).length | i18n_spec:'message.someMessage'}} </i>
+            </small> -->
+            <small>
+              <i>{{ui.message.paginationPage}}: {{page.inbox + 1}} {{ui.message.paginationOf}} {{messages.inbox.length}}, {{ui.message.paginationInTotal}}: {{messages.inbox | countBox}} </i>
+            </small>
+          </span>
+
+        </div>
+        <!-- end inbox listing -->
+
+      </div>
+      <!-- end inboxTab -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- outboxTab -->
+      <div class="tab-pane {{(views.outbox==true) && 'active'}}" id="outboxTab">
+
+        <div class="tab-header">
+          <h3 class="pull-left">{{ui.message.outbox}}</h3>
+          <!-- filter messages -->
+          <form class="pull-right">
+            <input type="text" 
+                    class="span12 search-query" 
+                    placeholder="{{ui.message.filterMessages}}" 
+                    ng-model="query.outbox">
+          </form>
+          <!-- end filter messages -->
+        </div>
+
+        <hr>
+
+        <p ng-hide="(messages.outbox[page.outbox] | filter:query.outbox).length > 0">{{ui.message.noMessage}}</p>
+
+        <!-- outbox listing -->
+        <div ng-show="(messages.outbox[page.outbox] | filter:query.outbox).length > 0">
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox"
+                          ng-model="selectionMaster.outbox"
+                          ng-click="toggleSelection(messages.outbox[page.outbox], 'outbox', selectionMaster.outbox)">
+                </th>
+                <th style="max-width: 400px;">{{ui.message.receviers}}</th>
+                <th>{{ui.message.subject}}</th>
+                <th>{{ui.message.date}}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="message in messages.outbox[page.outbox] | filter:query.outbox | orderBy:'creationTime':true">
+                <td>
+                  <input type="checkbox"
+                          ng-model="selection.outbox[message.uuid]"
+                          ng-checked="selection.outbox[message.uuid]">
+                          <!-- ng-checked="selectionMaster.outbox"> -->
+                </td>
+                <td>
+                  <span ng-repeat="receiver in message.responder">{{receiver | convertEve | convertUserIdToName}}, </span>
+                </td>
+                <td><a ng-click="requestMessage(message.uuid, 'outbox')">{{message.subject}}</a></td>
+                <td>{{message.creationTime | nicelyDate}}</td>
+                <td>
+                  <div class="pull-right">
+                    <button type="submit" 
+                            ng-click="removeMessage(message.uuid)" 
+                            class="btn btn-danger btn-mini"><i class="icon-trash icon-white"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button type="button" 
+                  ng-click="removeMessages(selection.outbox)" 
+                  class="btn btn-small btn-danger pull-left">
+                  <i class="icon-trash icon-white"></i>{{ui.message.deleteSelected}}</button>
+
+          <div class="btn-toolbar pull-right" style="margin: 0;">
+            <div class="btn-group">
+              <button class="btn btn-small {{(page.outbox == 0) && 'disabled'}}" 
+                      ng-click="paginate.before('outbox')">« {{ui.message.paginationPrevious}}
+              </button>
+              <button class="btn btn-small {{(page.outbox + 1 == messages.outbox.length) && 'disabled'}}" 
+                      ng-click="paginate.next('outbox')">{{ui.message.paginationNext}} »
+              </button>
+            </div>
+          </div>
+
+          <br><br>
+
+          <span class="muted pull-right">
+            <small>
+              <i>{{ui.message.paginationPage}}: {{page.outbox + 1}} {{ui.message.paginationOf}} {{messages.outbox.length}}, {{ui.message.paginationInTotal}}: {{messages.outbox | countBox}}</i>
+            </small>
+          </span>
+
+        </div>
+        <!-- end outbox listing -->
+
+      </div>
+      <!-- end outboxTab -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- notificationsTab -->
+      <div class="tab-pane {{(views.notifications==true) && 'active'}}" id="notificationsTab">
+
+        <div class="tab-header">
+          <h3 class="pull-left">{{ui.message.notifications}}</h3>
+
+        </div>
+
+        <hr>
+
+        <p ng-hide="scheadules.length > 0">{{ui.message.notificationsEmpty}}</p>
+        
+        <!-- notifications listing -->
+        <div ng-show="scheadules.length > 0">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th width="60"><!-- Status --></th>
+                <th width="50"><!-- Types --></th>
+                <th>{{ui.message.notificationHeaderLabel}}</th>
+                <th>{{ui.message.notificationHeaderReceivers}}</th>
+                <th>{{ui.message.notificationHeaderFrequency}}</th>
+                <th width="60"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="scheadule in scheadules">
+                <td>
+                  <span class="label label-success" ng-show="scheadule.active">{{ui.message.enabled}}</span>
+                  <span class="label" ng-hide="scheadule.active">{{ui.message.disabled}}</span>
+                </td>
+                <td class="scheadule-icons">
+                  <div><span class="entypo sms" ng-show="scheadule.sms">&#128241;</span></div>
+                  <div><span class="entypo mail" ng-show="scheadule.mail">&#128319;</span></div>
+                </td>
+                <td><a ng-click="requestNotification(scheadule.uuid)">{{scheadule.label}}</a></td>
+                <td><span class="muted"><small><i>{{scheadule.recipients | nicelyAudience}}</i></small></span></td>
+                <td><span ng-bind-html-unsafe="scheadule.offsets | nicelyOffsets"></span></td>
+                <td>
+                  <div class="pull-right">
+                    <button class="btn btn-mini"
+                            ng-click="requestNotification(scheadule.uuid)"><i class="icon-edit"></i></button>&nbsp;
+                    <button type="submit" 
+                            ng-click="scheaduler.remove(scheadule.uuid)" 
+                            class="btn btn-danger btn-mini"><i class="icon-trash icon-white"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <span class="muted pull-right">
+            <small><i>{{ui.message.inTotal}}: {{scheadules.length}} </i></small>
+          </span>
+
+        </div>
+        <!-- end notifications listing -->
+
+      </div>
+      <!-- end notificationsTab -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- trashTab -->
+      <div class="tab-pane {{(views.trash==true) && 'active'}}" id="trashTab">
+
+        <div class="tab-header">
+          <h3 class="pull-left">{{ui.message.trash}}</h3>
+          <!-- empty trash button -->
+          <div class="pull-right" style="margin-left: 10px;">
+            <button type="button" 
+                  ng-click="emptyTrash()" 
+                  class="btn btn-danger pull-left">
+                  <i class="icon-trash icon-white"></i>{{ui.message.emptyTrash}}</button>
+          </div>
+          <!-- end empty trash button -->
+          <!-- filter messages -->
+          <form class="pull-right">
+            <input type="text" 
+                    class="span12 search-query" 
+                    placeholder="{{ui.message.filterMessages}}" 
+                    ng-model="query.trash">
+          </form>
+          <!-- end filter messages -->
+        </div>
+
+        <hr>
+
+        <p ng-hide="(messages.trash[page.trash] | filter:query.trash).length > 0">{{ui.message.noMsgInTrash}}</p>
+
+        <!-- trash listing -->
+        <div ng-show="(messages.trash[page.trash] | filter:query.trash).length > 0">
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox"
+                          ng-model="selectionMaster.trash"
+                          ng-click="toggleSelection(messages.trash[page.trash], 'trash', selectionMaster.trash)">
+                </th>
+                <th width="60">{{ui.message.box}}</th>
+                <th>{{ui.message.persons}}</th>
+                <th>{{ui.message.subject}}</th>
+                <th>{{ui.message.date}}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="message in messages.trash[page.trash] | filter:query.trash | orderBy:'creationTime':true">
+                <td>
+                  <input type="checkbox"
+                          ng-model="selection.trash[message.uuid]"
+                          ng-checked="selection.trash[message.uuid]">
+                          <!-- ng-checked="selectionMaster.trash"> -->
+                </td>
+                <td><span class="label">{{message.box}}</span></td>
+                <td>
+                  <span ng-repeat="receiver in message.responder">{{receiver | convertEve | convertUserIdToName}}, </span>
+                </td>
+                <td><a ng-click="requestMessage(message.uuid, 'trash')">{{message.subject}}</a></td>
+                <td>{{message.creationTime | nicelyDate}}</td>
+                <td>
+                  <div class="pull-right">
+                    <button type="submit" 
+                            ng-click="restoreMessage(message.uuid)" 
+                            class="btn btn-success btn-mini"><i class="icon-thumbs-up icon-white"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button type="button" 
+                  ng-click="restoreMessages(selection.trash)" 
+                  class="btn btn-small btn-success pull-left">
+                  <i class="icon-thumbs-up icon-white"></i>{{ui.message.restoreSelected}}</button>
+
+          <div class="btn-toolbar pull-right" style="margin: 0;">
+            <div class="btn-group">
+              <button class="btn btn-small {{(page.trash == 0) && 'disabled'}}" 
+                      ng-click="paginate.before('trash')">« {{ui.message.paginationPrevious}}
+              </button>
+              <button class="btn btn-small {{(page.trash + 1 == messages.trash.length) && 'disabled'}}" 
+                      ng-click="paginate.next('trash')">{{ui.message.paginationNext}} »
+              </button>
+            </div>
+          </div>
+
+          <br><br>
+
+          <span class="muted pull-right">
+            <small>
+              <i>{{ui.message.paginationPage}}: {{page.trash + 1}} {{ui.message.paginationOf}} {{messages.trash.length}}, {{ui.message.paginationInTotal}}: {{messages.trash | countBox}}</i>
+            </small>
+          </span>
+
+        </div>
+        <!-- end trash listing -->
+
+      </div>
+      <!-- end trashTab -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <!-- end tabs content -->
+
+
+
+  </div>
+</div>
+<!-- end inboxes -->
+
+
+<!-- <br><br>
+<button type="submit" 
+        ng-click="createNotification()" 
+        class="btn btn-success">Create Notification</button>
+<button type="submit" 
+        ng-click="deleteNotification()" 
+        class="btn btn-danger">Delete Notification</button>
+<button type="submit" 
+        ng-click="editNotification()" 
+        class="btn btn-warning">Edit Notification</button>
+<button type="submit" 
+        ng-click="getNotification()" 
+        class="btn">Get Notification</button> -->

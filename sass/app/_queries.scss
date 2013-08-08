@@ -1,0 +1,119 @@
+
+
+
+/* Lastly, apply responsive CSS fixes as necessary */
+
+@media (min-width: 768px) and (max-width: 979px) {
+}
+
+
+@media (max-width: 767px) {
+}
+
+
+@media (min-width: 1200px) {
+}
+
+
+@media (min-width: 768px) and (max-width: 979px) {
+}
+
+
+@media (max-width: 767px) {
+  .navbar-fixed-top {
+    position: absolute;
+    margin-bottom: 0;
+  }
+
+  .navbar {
+    width: 100%;
+  }
+
+  .navbar .navbar-inner {
+    margin-right: -20px;
+    padding-right: 15px;
+    padding-left: 25px;
+  }
+  
+  #footer {
+    margin-left: -20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    width: 100%;
+  }
+
+  .brand {
+    margin-top: 20px;
+    background-position: 0 8px;
+  }
+
+  .nav-collapse.collapse ul {
+    margin-top: 10px;
+  }
+}
+
+
+@media (max-width: 979px) {
+
+  .navbar-fixed-top {
+    position: absolute;
+    margin-bottom: 0;
+  }
+
+  .brand {
+    background-position: 0 8px;
+  }
+
+  .nav-collapse.collapse ul {
+    margin-top: 10px;
+  }
+}
+
+
+@media (min-width: 980px) {
+}
+
+
+@media (max-width: 480px) {
+
+  .navbar-fixed-top {
+    position: absolute;
+    margin-bottom: 0;
+  }
+
+  .navbar {
+    width: 100%;
+  }
+
+  .navbar .navbar-inner {
+    margin-right: -20px;
+    padding-right: 15px;
+    padding-left: 25px;
+  }
+
+  #footer {
+    margin-left: -20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    width: 100%;
+  }
+
+  .brand {
+    margin-top: 30px;
+    background-position: 0 8px;
+  }
+
+  .nav-collapse.collapse ul {
+    margin-top: 10px;
+  }
+
+  .header form {
+    display: block;
+    clear: right;
+    margin: 0 auto;
+  }
+}
+
+
+
+

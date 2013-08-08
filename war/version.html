@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>WebPaige Versions</title>
+    
+    <meta name="description" content="WebPaige">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- jquery -->
+    <!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+    <script src="js/libs/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+    
+    <!-- favicons -->
+    <link rel="shortcut icon" ng-href="profiles/{{config.profile.meta}}/img/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" ng-href="profiles/{{config.profile.meta}}/img/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" ng-href="profiles/{{config.profile.meta}}/img/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" ng-href="profiles/{{config.profile.meta}}/img/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" ng-href="profiles/{{config.profile.meta}}/img/ico/apple-touch-icon-57-precomposed.png">
+
+    <!-- styles -->
+    <link rel="stylesheet" href="dist/bootstrap.css">
+    <link rel="stylesheet" href="dist/responsive.css">
+    <link rel="stylesheet" href="dist/app.css">
+    
+    <!-- compability tests and css fixers -->
+    <script src="libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    
+  </head>
+  <body>
+
+    <!-- wrap -->
+    <div id="wrap">
+      <!-- container-fluid -->
+      <div class="container-fluid">
+        <section id="versions">
+          <div class="container-narrow">
+            <div class="masthead">
+              <h4 class="pull-right"><span class="muted">Current version:</span> 2.3.3</h4>
+              <h3 class="muted">Change Log</h3>
+            </div>
+            <hr>
+            <div class="jumbotron">
+              <h1>WebPaige Versions</h1>
+              <br>
+              <a class="btn btn-large btn-success" onclick="window.close()">Close this window</a>
+            </div>
+            <hr>
+            <div class="row-fluid marketing">
+              <div class="span12">
+                <h4>2.3.3</h4>
+                <p>
+                  <ul>
+                    <li>Deployed for 100T, 110K, 120G and 130B <i class="text-info">26-7-2013</i></li>
+                    <li>Improved translations (#33) <i class="text-info">12-7-2013</i></li>
+                    <li>Implement the moving of time-slots starting in the past and ending in the future by slicing
+                      them <i class="text-info">10-7-2013</i></li>
+                    <li>Enabling changing of group member passwords for planners <i class="text-info">9-7-2013</i></li>
+                    <li>Multiple IE bugs fix for library loading order issue <i class="text-info">9-7-2013</i></li>
+                  </ul>
+                </p>
+                <h4>2.3.2</h4>
+                <p>
+                  <ul>
+                    <li>Deployed for 100T, 110K, 120G and 130B <i class="text-info">8-7-2013</i></li>
+                    <li>Applying alphabetical sorting on receivers list when composing a message <i class="text-info">8-7-2013</i></li>
+                    <li>Internationalization updates with a focus on the Dutch language <i class="text-info">8-7-2013</i></li>
+                    <li>Major performance improvement when adding, modifying or deleting new timeslots (back-end improvement) <i class="text-info">8-7-2013</i></li>
+                    <li>Addressed a bug in the functionality of changing the availability of another team member <i class="text-info">8-7-2013</i></li>
+                  </ul>
+                </p>
+                <h4>2.3.1</h4>
+                <p>
+                  <ul>
+                    <li>Deployed for 100T, 110K, 120G and 130B <i class="text-info">3-7-2013</i></li>
+                    <li>Hotfix for bug in changing view (e.g. jump back to week-view) after mutating planboard (#26/#3) <i class="text-info">3-7-2013</i></li>
+                    <li>Performance issues: Live instance (#25) <i class="text-info">28-6-2013</i></li>
+                    <li>Performance issues: Grouped calls for member timelines (#25) <i class="text-info">28-6-2013</i></li>
+                    <li>Background syncing for P2000 alerts (#32) <i class="text-info">2-7-2013</i></li>
+                    <li>Extreme mutations in the past has been reviewed and blocked (#31) <i class="text-info">2-7-2013</i></li>
+                    <li>Show slotform feelds already filled with time and date when opening (#2) <i class="text-info">1-7-2013</i></li>
+                    <li>Adjust slotform times when mutation planboard items (#37) <i class="text-info">1-7-2013</i></li>
+                    <li>Auto-refresh kicks in while mutating (#28) <i class="text-info">1-7-2013</i></li>
+                    <li>Remove slotform after planboard mutation (#36) <i class="text-info">1-7-2013</i></li>
+                    <li>Clicking today shows yesterday (#35) <i class="text-info">1-7-2013</i></li>
+                    <li>Set standard agenda view to today +6days (#30)<i class="text-info">1-7-2013</i></li>
+                  </ul>
+                </p>
+                <h4>2.3.0</h4>
+                <p>
+                  <ul>
+                    <li>Deployed for 100T, 110K, 120G and 130B <i class="text-info">27-5-2013</i></li>
+                    <li>Always change a timeslot through slot form in planboard <i class="text-info">27-6-2013</i></li>
+                    <li>Planboard auto refresher is being blocked while working on planboard <i class="text-info">27-6-2013</i></li>
+                    <li>Percentage counter for members timeline in status bar <i class="text-info">5-6-2013</i></li>
+                    <li>Live, 120G <i class="text-info">5-6-2013</i></li>
+                    <li>Help & Support <i class="text-info">4-6-2013</i></li>
+                    <li>Download mobile app functionality <i class="text-info">4-6-2013</i></li>
+                    <li>Deployed for 100T, 110K, 120G and 130B <i class="text-info">16-5-2013</i></li>
+                  </ul>
+                </p>
+                <h4>2.2.0</h4>
+                <p>
+                  <ul>
+                    <li>Hotfix for not clearing cache for users <i class="text-info">20-6-2013</i></li>
+                    <li>Hotfix for stability issues in profile timeline <i class="text-info">15-5-2013</i></li>
+                    <li>Hotfix for not displaying user information on profile editing form <i class="text-info">15-5-2013</i></li>
+                    <li>Background planboard sync (60 seconds interval) <i class="text-info">13-5-2013</i></li>
+                    <li>Message job scheduler <i class="text-info">13-5-2013</i></li>
+                    <li>IE 8/9/10 planboard stabilization <i class="text-info">13-5-2013</i></li>
+                    <li>Hotfix for not going further than 6th page in pagination in messages <i class="text-info">4-5-2013</i></li>
+                    <li>Deployed for 100T, 110K, 120G and 130B <i class="text-info">3-5-2013</i></li>
+                  </ul>
+                </p>
+                <h4>2.1.0</h4>
+                <p>
+                  <ul>
+                    <li>IE9 & IE10 support, IE8 (temporarily) and less are blocked <i class="text-info">3-5-2013</i></li>
+                    <li>Google Anlaytics implemented <i class="text-info">3-5-2013</i></li>
+                    <li>Pagination in messages center <i class="text-info">2-5-2013</i></li>
+                    <li>Instruct user with email adres placeholder when remembering account info at login <i class="text-info">29-4-2013</i></li>
+                    <li>Conflict error message by registering same username <i class="text-info">29-4-2013</i></li>
+                    <li>Fixed not displaying alarm messages in dashboard <i class="text-info">26-4-2013</i></li>
+                    <li>Fixed centering styling issue for login button in login screen for IE8 <i class="text-info">26-4-2013</i></li>
+                    <li>Language corrections in planboard statistics <i class="text-info">19-4-2013</i></li>
+                    <li>Hotfix for not displaying correct weeks by previous/future weeks in profile timeline <i class="text-info">19-4-2013</i></li>
+                  </ul>
+                </p>
+                <h4>2.0.2</h4>
+                <p>
+                  <ul>
+                    <li>Deployed for 110K <i class="text-info">17-4-2013</i></li>
+                    <li>Core modules seperated <i class="text-info">17-4-2013</i></li>
+                    <li>Background syncing for every minute and displaying webkit desktop notification for new messages <span class="text-warning">(still in development, temporarily disabled)</span> <i class="text-info">16-4-2013</i></li>
+                    <li>By adding a new slot, slot form now opens with time of now and 1 hour later <i class="text-info">15-4-2013</i></li>
+                    <li>Full screen ability for webkit browsers <i class="text-info">15-4-2013</i></li>
+                    <li>Compressed third party libraries (performance tweak) <i class="text-info">15-4-2013</i></li>
+                    <li>AMD support added for loading third-party-libraries (performance tweak) <i class="text-info">15-4-2013</i></li>
+                    <li>Major app loading performanace tweaks with reducing requests and minified and compiled to one version of app libraries <i class="text-info">13-4-2013</i></li>
+                    <li>Meridian time (hour) issue with selecting time range with mouse either by shift or ctrl keys is resolved <i class="text-info">12-4-2013</i></li>
+                    <li>Tablet issues has been solved <i class="text-info">12-4-2013</i></li>
+                    <li>Corrected a localization issue with 'no messages' in the box <i class="text-info">11-4-2013</i></li>
+                    <li>Tablet datetime selectors for planboard and profile timeline <i class="text-info">11-4-2013</i></li>
+                    <li>Removed footer for mobile and tablets and changed it to portable preloader <i class="text-info">10-4-2013</i></li>
+                    <li>Main navigation menu more friendly with apple or android tablets or mobiles <i class="text-info">10-4-2013</i></li>
+                    <li>First group to render setting functionality <i class="text-info">10-4-2013</i></li>
+                    <li>Default wish value setting for groups <i class="text-info">9-4-2013</i></li>
+                    <li>Dashboard 2.0 <i class="text-info">8-4-2013</i></li>
+                  </ul>
+                </p>
+                <h4>2.0.1</h4>
+                <p>
+                  <ul>
+                    <li>Fixed rendering issues with pie chart of totals in statistics in plan <i class="text-info">5-4-2013</i></li>
+                    <li>Dynamic listing for legenda based on available states of that particular installation <i class="text-info">4-4-2013</i></li>
+                    <li>Hot fix for not displaying date time conversions in message center <i class="text-info">4-4-2013</i></li>
+                    <li>Case-insesitive login <i class="text-info">4-4-2013</i></li>
+                    <li>Quick css fix for IE. (Not showing timeslots) <i class="text-info">3-4-2013</i></li>
+                    <li>CSS fix for tabs left border. (Bug with dynamic height sizing when there is no content in tab is still open!!) <i class="text-info">3-4-2013</i></li>
+                  </ul>
+                </p>
+                <h4>2.0.0</h4>
+                <p>
+                  <ul>
+                    <li>Deplyoyed for 100T, 110K, 120G, 130B <i class="text-info">3-4-2013</i></li>
+                  </ul>
+                </p>
+              </div>
+          </div> <!-- /container -->
+        </section>
+      </div>
+      <!-- end container-fluid -->
+      <div id="push"></div>
+    </div>
+    <!-- end wrap -->
+
+    <!-- bootstrap -->
+    <script src="libs/bootstrap/bootstrap.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36532309-1']);
+      _gaq.push(['_setDomainName', 'ask-cs.com']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+
+  </body>
+</html>

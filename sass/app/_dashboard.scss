@@ -1,0 +1,404 @@
+#dashboard {
+  overflow: hidden;
+
+  .alert {
+    margin-top: 15px;
+
+    #activation {
+      margin-left: 10px;
+    }
+
+    .close {
+      margin-top: 2px;
+    }
+  }
+
+  .widget {
+    margin-top: 5px;
+    margin-bottom: 30px;
+
+    .head {
+      overflow: hidden;
+      height: 40px;
+
+      h4 {
+        display: inline;
+      }
+
+      #weeker {
+        display: inline;
+        margin: 0;
+        padding: 0;
+        float: left;
+      }
+
+      button {
+        float: right;
+        padding-left: 6px;
+        padding-right: 6px;
+      }
+    }
+
+    hr {
+      margin-top: 0;
+    }
+
+    hr.lastline {
+      margin: 0 0 5px 0;
+    }
+
+    ul#announcements {
+      list-style: none;
+      margin: 0;
+      margin-top: -20px;
+      padding: 0;
+
+      li {
+        border-bottom:1px solid #d3d1c4;
+        padding: 10px;
+        margin: 0;
+        overflow: hidden;
+
+        &:nth-child(odd) {
+          background-color: $grayLighter;
+        }
+
+        &:nth-child(even) {
+          background-color: $white;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        table {
+          margin: 5px 0;
+
+          tr {
+            vertical-align: top;
+
+            td {
+              .prio {
+                margin-right: 10px;
+              }
+
+              p {
+                font-size: 13px;
+              }
+
+              .sender {
+                display: block;
+                font-size: 13px;
+                float: right;
+                margin-right: 10px;
+              }
+
+              .muted {
+                font-size: 11px;
+              }
+            }
+
+            td.first {
+              width: 80px;
+            }
+
+            td.last { 
+              width: 100%;              
+            }
+          }
+        }
+      }
+    }
+
+    ul#pies {
+      margin: 0;
+      padding: 0;
+      margin-top: -20px;
+      list-style: none;
+
+      li {
+        // background-color: #ddd;
+        border-bottom: 1px solid #ddd;
+        // margin-bottom: 20px;
+        // padding: 10px;
+        overflow: hidden;
+
+        // padding-bottom: 5px;
+        height: 100%;
+
+        &:nth-child(odd) {
+          background-color: $grayLighter;
+        }
+
+        &:nth-child(even) {
+          background-color: $white;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        header {
+          position: relative;
+
+          h4 {
+            margin: 15px 0 20px 15px;
+          }
+
+          button {
+            position: absolute;
+            top: -5px;
+            right: 10px;
+            padding-left: 3px;
+            padding-right: 3px;
+          }
+        }
+
+        .blocks {
+
+          .span4 {
+            &:first-child {
+              padding-left: 15px;
+            }
+          }
+
+          .block {
+            // min-width: 310px;
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: hidden;
+            margin-bottom: 10px;
+
+            .icon {   
+              margin-right: 20px;
+              float: left;
+                 
+              .scoreboard {
+                display: block;
+                min-width: 75px;
+                height: 48px;
+                text-align: center;
+                -webkit-border-radius: 5px;
+                   -moz-border-radius: 5px;
+                        border-radius: 5px;
+                color: #fff;
+                margin-bottom: 5px;
+                padding-top: 27px;
+
+                .state {
+                  float: left;
+                  font-size: 30px;
+                  font-weight: bold;
+                  margin-right: 4px;
+                  margin-left: 10px;
+                }
+
+                .seperator {
+                  float: left;
+                  font-size: 46px;
+                  font-weight: normal;
+                  margin-right: 4px;                  
+                }
+
+                .wish {
+                  float: left;
+                  font-size: 30px;
+                  font-weight: bold;
+                  margin-right: 10px;
+                }
+              }
+
+              .more {
+                background-color: $tmmore;
+              }
+
+              .even {
+                background-color: $tmeven;
+              }
+
+              .less {
+                background-color: $tmless;
+              }
+
+              .pie {
+                display: inline;
+                float: left;
+                width: 80px;
+                height: 80px;
+              }
+            }
+
+            .body {
+              float: left;
+              overflow: hidden;
+              margin-bottom: 10px;
+
+              h3 {
+                display: block;
+                margin: -10px 0 -5px 0;
+                padding: 0;
+                font-size: 14px;
+              }
+
+              hr {
+                margin: 0 0 5px 0;
+              }
+
+              h4 {
+                margin: 0;
+                font-size: 12px;
+              }
+
+              h5 {
+                display: inline;
+                font-size: 11px;
+              }
+
+              table {
+                tr {
+                  margin: 0;
+                  padding: 0;
+
+                  td {
+
+                    &:first-child {
+                      width: 55%;
+                    }
+
+                    h6 {
+                      margin-top: 0; 
+                      margin-bottom: 0;  
+                    }
+
+                    .badge {
+                      margin-top: 0px;
+                    }
+                  }
+                }
+              }
+              
+            }
+
+            .btn-group .dropdown-menu {
+              z-index: 2000;
+            }
+          }
+          
+        }
+
+        footer {
+          margin: 0;
+          padding-left: 15px;
+          overflow: hidden;
+
+          .shorter {
+            display: inline-block;
+            width: 100%;
+            height: 21px;
+          }
+
+          .remove {
+            font-size: 0;
+            // display: none;
+            text-indent: -9999px;
+          }
+
+          .shortages {
+            margin-top: -30px;
+            // display: none;
+
+            .span4 {
+              padding-right: 40px;
+
+              h4 {
+                margin-left: -30px;
+                margin-bottom: 5px;
+                font-size: 14px;
+              }
+
+              ul {
+                margin-left: -30px;
+                padding-right: 20px;
+                margin-bottom: 20px;
+
+                li {
+                  padding: 5px;
+                  
+                  &:first-child {
+                    border-top: 1px solid #ddd;
+                  }
+                  
+                  &:last-child {
+                    border-bottom: 1px solid #ddd;
+                  }
+
+                  .label {
+                    margin-right: 5px;
+                  }
+
+                  h5 {
+                    display: inline;
+                    font-size: 12px;
+                  }
+
+                  button {
+                    padding-left: 2px;
+                    padding-right: 2px;
+                  }
+                }
+              }
+
+
+            }
+          }
+        }
+
+      }
+    }
+    
+  }
+  
+}
+
+
+#widget-pies {
+  padding-bottom: 0;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      margin: 3px auto;
+        
+      label {
+        font-weight: normal;
+        font-size: 13px;
+
+        input {
+          margin-right: 4px;
+          margin-top: -2px;
+        }
+      }
+    }
+  }
+
+  hr {
+    margin: 5px auto 10px auto;  
+  }
+
+  .actions {
+    margin-bottom: 10px;
+    overflow: hidden;
+
+    button {
+      margin-left: 10px;
+    }
+  }
+}
+
+.popover-title {
+  font-weight: bold;
+}
+

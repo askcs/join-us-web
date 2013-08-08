@@ -1,0 +1,214 @@
+.navbar {
+  z-index: 100;
+
+  .brand {
+    margin-top: 0px;
+    margin-bottom: 0;
+    // margin-left: 20px;
+    padding-bottom: 0;
+     width: 200px;
+     height: 50px;
+     background: url("../img/logoHeader.png") no-repeat;
+     //background-position: 0 8px;
+     text-indent: -9999px;
+    color: #f5f4ee;
+    /*text-shadow: 0 -1px 0 #000;*/
+    text-shadow: none;
+    font-weight: normal;
+    font-size: 20px;
+  }
+}
+
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  z-index: 99;
+  position: relative;
+  margin: 0 auto -60px;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+
+  .container-fluid {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+
+  .container {
+    padding-top: 75px;
+  }
+}
+
+
+/* Set the fixed height of the footer here */
+#push {
+  height: 60px;
+}
+
+
+.header {
+  display: table;
+  margin-bottom: 15px;
+
+  h2 {
+    display: inline;
+    float: left;
+    margin: 0;
+  }
+
+  form {
+    float: right;
+    margin: 0;
+    margin-top: 5px;
+  }
+}
+ 
+
+#download {
+  margin: 5px auto;
+  text-align: center;
+
+  button {
+    /* padding:0; */
+    /* padding-top: 15px; */
+    /* padding-bottom: 10px; */
+    /* width: 360px; */
+  }
+
+  span.entypo {
+    position: relative;
+    top:-10px;
+    margin-right: 5px;
+    /* height: 30px; */
+    /* text-shadow: 1px 1px 0 black; */
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    text-shadow: none;
+    font-size: 46px;
+    /* line-height: 40px; */
+  }
+
+  span.msg {
+    position: relative;
+    top: -5px;
+    font-size: 18px;
+  }
+}
+
+
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  background-color: $orange;
+  z-index: 100;
+
+  .container-fluid {
+    display: table;
+    padding-top: 10px;
+    height: 100%;
+
+    p {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+
+  p.muted {
+    float:left;
+    margin-top: 12px;
+
+    img {
+      margin-right: 5px;
+      height: 20px;
+    }
+  }
+
+  #copyrights {
+    position: absolute;
+    right: 20px;
+    margin-top: 0px;
+    text-align: right;
+    line-height: 14px;
+
+    span.muted {
+      position: absolute;
+      top: 5px;
+      right: 0; //with button 255px
+      float: right;
+      width: 200px;
+
+      a {
+        color: $blueDark;
+      }
+    }
+  }
+}
+
+
+#download-footer {
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    float: right;
+    /* padding-top: 10px; */
+    /* padding-bottom: 8px; */
+    width: 240px;
+
+    span.entypo {
+      margin-right: 5px;
+      height: 24px;
+      /* text-shadow: 1px 1px 0 black; */
+      /* text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25); */
+      text-shadow: none;
+      font-size: 32px;
+      /* line-height: 30px; */
+    }
+
+    span.msg {
+      position: relative;
+      top: -5px;
+      font-size: 14px;
+    }
+  }
+}
+
+
+.page {
+  overflow: hidden;
+  /* margin-top: 15px; */
+  /* margin-left: 30px; */
+  /* padding: 20px; */
+  border: 1px solid #ddd;
+  background-color: #fff;
+
+  .content {
+    padding: 20px;
+  }
+}
+
+
+
+.page-header {
+  overflow: hidden;
+  min-height: 40px;
+  border-bottom: 1px solid $hrBorder;
+
+  h2 {
+    display: inline;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .btn-group {
+    margin-left: 15px;
+  }
+
+  form.form-search {
+    display: inline;
+  }
+}

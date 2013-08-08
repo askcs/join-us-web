@@ -1,0 +1,108 @@
+<div class="page-header">
+  <h2>{{ui.settings.settings}}</h2>
+</div>
+
+
+<!-- settings -->
+<div class="row-fluid">
+  <div class="tabbable tabs-left">
+    
+    <!-- tabs -->
+    <ul class="nav nav-tabs nav-tabs-app" style="margin-right: 0px;">
+
+      <li class="active">
+        <a href="#userSettingsTab" 
+            data-toggle="tab"><span class="entypo">&#128100;</span> {{ui.settings.user}}</a>
+      </li>
+      <li>
+        <a href="#appSettingsTab" 
+            data-toggle="tab"><span class="entypo">&#9881;</span> {{ui.settings.application}}</a>
+      </li>
+    </ul>
+    <!-- end tabs -->
+
+
+    <!-- tabs content -->
+    <div class="tab-content">
+
+      <!-- userSettingsTab -->
+      <div class="tab-pane active" id="userSettingsTab">
+
+        <div class="tab-header">
+          <h3 class="pull-left">{{ui.settings.userSettings}}</h3>
+        </div>
+        <hr>
+
+        <!-- user settings form -->
+        <form>
+          <fieldset>
+        
+            <div class="control-group">
+              <label class="control-label">{{ui.settings.langSetting}}</label>
+              <select ng-model="settings.user.language" 
+                      ng-options="option as value for (option, value) in languages">
+              </select>
+            </div>
+        
+            <div class="control-group">
+              <label class="control-label">Google account</label>
+              <button class="btn btn-success" 
+                      type="button"
+                      ng-click="authGoogle()">Authorize</button>
+            </div>
+
+            <br>
+
+            <div class="form-actions">
+              <button type="submit" 
+                      ng-click="save(settings)" 
+                      class="btn btn-success">{{ui.settings.saveSettings}}</button>
+            </div>
+
+          </fieldset>
+        </form>
+        <!-- end user settings form -->
+
+      </div>
+      <!-- end userSettingsTab -->
+
+      <!-- appSettingsTab -->
+      <div class="tab-pane" id="appSettingsTab">
+
+        <div class="tab-header">
+          <h3 class="pull-left">{{ui.settings.appSettings}}</h3>
+        </div>
+        <hr>
+
+        <!-- app settings form -->
+        <form>
+          <fieldset>
+        
+            <div class="control-group">
+              <label class="control-label">First group of choice</label>
+              <select ng-model="settings.app.group" 
+                      ng-options="option as value for (option, value) in groups">
+              </select>
+            </div>
+
+            <br>
+
+            <div class="form-actions">
+              <button type="submit" 
+                      ng-click="save(settings)" 
+                      class="btn btn-success">{{ui.settings.saveSettings}}</button>
+            </div>
+
+          </fieldset>
+        </form>
+        <!-- end user settings form -->
+
+      </div>
+      <!-- end appSettingsTab -->
+
+    </div>
+    <!-- end tabs content -->
+
+  </div>
+</div>
+<!-- end settings -->

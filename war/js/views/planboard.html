@@ -1,0 +1,747 @@
+<section id="planboard" ng-controller="timeline">
+
+
+
+<!--   page header
+  <div class="page-header">
+    <h2>{{ui.planboard.planboard}}</h2>
+
+  </div>
+   end page header -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- slot controls -->
+  <div class="row-fluid" ng-show="views.slot.add || views.slot.edit || views.group || views.wish || views.member">
+
+    <form class="form-inline form-toggled well">
+
+      <!-- close btn -->
+      <button ng-click="resetInlineForms()" class="close">&times;</button>
+      <!-- end close btn -->
+    
+      <h4 ng-show="views.slot.add">{{ui.planboard.newAvail}}</h4>
+      <h4 ng-show="views.slot.edit">{{ui.planboard.updateAvail}}</h4>
+      <h4 ng-show="views.group">{{slot.group|stripHtml}}</h4>
+      <h4 ng-show="views.wish">{{slot.group|stripHtml}} (Wishes)</h4>
+      <h4 ng-show="views.member">{{slot.member|convertUserIdToName}}</h4>
+
+      <hr>
+
+      <!-- slot start -->
+      <div class="form-elements-group" ng-show="browser.mobile">
+        <label>{{ui.planboard.from}}</label>
+
+        <!-- datetime -->
+        <div class="control-group dater-mobile" ng-show="views.slot.add || views.slot.edit || views.wish">
+          <input  name="date-start" 
+                  type="datetime"
+                  ng-model="slot.start.datetime">
+        </div>
+        <div class="control-group dater-mobile" ng-show="views.group || views.member">
+          <input  name="date-start" 
+                  type="datetime"
+                  ng-model="slot.start.datetime"
+                  disabled>
+        </div>
+        <!-- end datetime -->
+
+      </div>
+      <div class="form-elements-group" ng-hide="browser.mobile">
+        <label>{{ui.planboard.from}}</label>
+
+        <!-- date -->
+        <div class="control-group dater" ng-show="views.slot.add || views.slot.edit || views.wish">
+          <input  name="date-start" 
+                  type="text" 
+                  ng-model="slot.start.date" 
+                  data-date-format="dd-mm-yyyy" 
+                  bs-datepicker="">
+          <i class="icon-calendar"></i>
+        </div>
+        <div class="control-group dater" ng-show="views.group || views.member">
+          <input  name="date-start" 
+                  type="text"
+                  ng-model="slot.start.date"
+                  disabled>
+          <i class="icon-calendar"></i>
+        </div>
+        <!-- end date -->
+
+        <!-- time -->
+        <div class="control-group timer" ng-show="views.slot.add || views.slot.edit || views.wish">
+          <input  name="time-start" 
+                  type="text" 
+                  ng-model="slot.start.time" 
+                  bs-timepicker>
+          <i class="icon-time"></i>
+        </div>
+        <div class="control-group timer" ng-show="views.group || views.member">
+          <input  name="time-start" 
+                  type="text" 
+                  ng-model="slot.start.time" 
+                  disabled>
+          <i class="icon-time"></i>
+        </div>
+        <!-- end time -->
+
+      </div>
+      <!-- end slot start -->
+
+      <!-- slot end -->
+      <div class="form-elements-group" ng-show="browser.mobile">
+        <label>{{ui.planboard.from}}</label>
+
+        <!-- datetime -->
+        <div class="control-group dater-mobile" ng-show="views.slot.add || views.slot.edit || views.wish">
+          <input  name="date-start" 
+                  type="datetime"
+                  ng-model="slot.end.datetime">
+        </div>
+        <div class="control-group dater-mobile" ng-show="views.group || views.member">
+          <input  name="date-start" 
+                  type="datetime"
+                  ng-model="slot.end.datetime"
+                  disabled>
+        </div>
+        <!-- end datetime -->
+
+      </div>
+      <div class="form-elements-group" ng-hide="browser.mobile">
+        <label>{{ui.planboard.till}}</label>
+
+        <!-- date -->
+        <div class="control-group dater" ng-show="views.slot.add || views.slot.edit || views.wish">
+          <input  name="date-end" 
+                  type="text" 
+                  ng-model="slot.end.date" 
+                  data-date-format="dd-mm-yyyy" 
+                  bs-datepicker="">
+          <i class="icon-calendar"></i>
+        </div>
+        <div class="control-group dater" ng-show="views.group || views.member">
+          <input  name="date-end" 
+                  type="text" 
+                  ng-model="slot.end.date" 
+                  disabled>
+          <i class="icon-calendar"></i>
+        </div>
+        <!-- end date -->
+
+        <!-- time -->
+        <div class="control-group timer" ng-show="views.slot.add || views.slot.edit || views.wish">
+          <input  name="time-end" 
+                  type="text" 
+                  ng-model="slot.end.time" 
+                  bs-timepicker>
+          <i class="icon-time"></i>
+        </div>
+        <div class="control-group timer" ng-show="views.group || views.member">
+          <input  name="time-end" 
+                  type="text" 
+                  ng-model="slot.end.time" 
+                  disabled>
+          <i class="icon-time"></i>
+        </div>
+        <!-- end time -->
+
+      </div>
+      <!-- end slot end -->
+
+      <!-- slot state -->
+      <div class="form-elements-group" ng-show="views.slot.add || views.slot.edit || views.member">
+        <label>{{ui.planboard.state}}</label>
+        <select ng-model="slot.state" 
+                ng-options="option as value for (option, value) in states" 
+                ng-change="modifySlot(slot)" 
+                ng-show="views.slot.add || views.slot.edit">
+          <!--<option value="">{{ui.planboard.selectAState}}</option>-->
+        </select>
+        <select ng-model="slot.state" 
+                disabled
+                ng-options="option as value for (option, value) in states"
+                ng-show="views.member">
+        </select>
+      </div>
+      <!-- end slot state -->
+
+      <!-- slot recursive -->
+      <div class="form-elements-group rightest" ng-show="views.slot.add || views.slot.edit">
+        <label>{{ui.planboard.reoccuring}}</label>
+        <input type="checkbox" ng-model="slot.recursive">
+      </div>
+      <!-- end slot recursive -->
+
+      <!-- group diff -->
+      <div class="form-elements-group" ng-show="views.group">
+        <small>
+          <i ng-show="(slot.diff < 0)">{{slot.diff | i18n_spec:'planboard.lessPeople'}}</i>
+          <i ng-show="(slot.diff == 0)">{{ui.planboard.samePeople}}</i>
+          <i ng-show="(slot.diff > 0)">{{slot.diff | i18n_spec:'planboard.morePeople'}}</i>
+        </small>
+      </div>
+      <!-- group diff -->
+
+      <!-- wish diff -->
+      <div class="form-elements-group" ng-show="views.wish">
+        <label>{{ui.planboard.wished}}</label>
+        <input  name="wish-count" 
+                type="text" 
+                class="input-mini" 
+                ng-model="slot.wish"
+                ng-hide="app.resources.role > 1">
+        <input  name="wish-count" 
+                type="text" 
+                class="input-mini" 
+                ng-model="slot.wish"
+                disabled
+                ng-show="app.resources.role > 1">
+      </div>
+      <!-- end wish diff -->
+
+      <!-- member info -->
+      <div class="form-elements-group" ng-show="views.member">
+        <small>
+          <i>{{ui.planboard.combine_reoccuring}}</i>
+        </small>
+      </div>
+      <!-- end member info -->
+
+      <!-- slot actions -->
+      <div class="form-elements-actions pull-right">
+        
+        <div ng-show="(slot.diff < 0)">
+          <button type="button" 
+                  ng-click="sendShortageMessage(slot)" 
+                  class="btn btn-success"
+                  ng-hide="app.resources.role > 1">{{ui.planboard.sendMsgToMember}}</button>
+        </div>
+        <div ng-show="views.slot.add">
+          <button type="button" 
+                  ng-click="timelineOnAdd('true', slot)" 
+                  class="btn btn-success">{{ui.planboard.add}}</button>
+        </div>
+        <div ng-show="views.slot.edit">
+          <button type="button" 
+                  ng-click="timelineOnRemove()" 
+                  class="btn btn-danger"
+                  style="margin-right: 5px">{{ui.planboard.del}}</button>
+          <button type="button" 
+                  ng-click="timelineOnChange('true', original, slot)" 
+                  class="btn btn-success">{{ui.planboard.change}}</button>
+        </div>
+        <div ng-show="views.wish">
+          <button type="button" 
+                  ng-click="wisher(slot)" 
+                  class="btn btn-success"
+                  ng-hide="app.resources.role > 1">{{ui.planboard.setWish}}</button>
+        </div>
+      </div>
+      <!-- end slot actions -->
+
+    </form>
+  </div>
+  <!-- end slot controls -->
+
+
+
+
+
+
+
+
+  <!-- timelines & statistics -->
+  <div class="row-fluid">
+    <div class="tabbable tabs-left">
+      
+
+
+      <!-- tabs -->
+      <ul class="nav nav-tabs nav-tabs-app" style="margin-right: 0px;">
+        <li class="active">
+          <a  href="#timelineTab" 
+              data-toggle="tab"
+              ng-click="destroy.statistics();"><span class="entypo">&#128340;</span> {{ui.planboard.timeline}}</a>
+        </li>
+        <li>
+          <a  href="#statisticsTab" 
+              data-toggle="tab"
+              ng-click="destroy.timeline();"><span class="entypo">&#128200;</span> {{ui.planboard.statistics}}</a>
+        </li>
+      </ul>
+      <!-- end tabs -->
+
+
+
+
+
+
+      <!-- tabs content -->
+      <div class="tab-content">
+
+      <div class="tab-header">
+      <h3 class="pull-left">{{ui.message.inbox}}</h3>
+          <!-- new availability button -->
+          <div class="btn-group pull-right">
+              <button type="submit"
+                      ng-click="toggleSlotForm()"
+                      class="btn btn-success {{(views.slot.add==true) && 'active'}}">{{ui.planboard.newAvail}}</button>
+          </div>
+      </div>
+
+        <!-- timelines -->
+        <div class="tab-pane active" id="timelineTab">
+
+          <!-- timeline -->
+          <div id="timeline">
+
+            <!-- timeline-toolbar -->
+            <div id="timeline-toolbar">
+
+              <!-- groups members controls -->
+              <div class="pull-left">
+
+                <!-- groups list -->
+                <select ng-model="timeline.current.group" 
+                        ng-options="group.uuid as group.name for group in groups"
+                        ng-selected="timeline.current.group"
+                        ng-change="requestTimeline()">
+                </select>
+                <!-- end groups list -->
+
+                <!-- divisions list -->
+                <select ng-model="timeline.current.division" 
+                        ng-options="division.id as division.label for division in divisions"
+                        ng-selected="timeline.current.division"
+                        ng-change="requestTimeline()"
+                        ng-show="divisions.length > 0">
+                </select>
+                <!-- end divisions list -->
+
+              </div>
+
+              <!-- groups members controls -->
+              <div class="pull-right">
+
+                <!-- timeline bar charts -->
+                <div  class="btn-group">
+                  <button type="button" 
+                          ng-click="barCharts()" 
+                          class="btn {{(timeline.config.bar==true) && 'active'}}" 
+                          ng-model="timeline.config.bar">{{ui.planboard.barCharts}}</button>
+                </div>
+                <!-- end timeline bar charts -->
+
+                <!-- group wishes -->
+                <div  class="btn-group">
+                  <button type="button" 
+                          ng-click="groupWishes()"
+                          class="btn {{(timeline.config.wishes==true) && 'active'}}" 
+                          ng-model="timeline.config.wishes">{{ui.planboard.wishes}}</button>
+                </div>
+                <!-- end group wishes -->
+
+                <!-- legenda -->
+                <div  class="btn-group">
+                  <button type="button" 
+                          ng-click="showLegenda()"
+                          class="btn {{(timeline.config.legendarer==true) && 'active'}}" 
+                          ng-model="timeline.config.legendarer">{{ui.planboard.legenda}}</button>
+                </div>
+                <!-- end legenda -->
+
+                <!-- timeline layout manager -->
+                <div  class="btn-group">
+                  <button type="button" 
+                          ng-model="timeline.current.layouts.group" 
+                          class="btn {{(timeline.current.layouts.group==true) && 'active'}}" 
+                          ng-click="requestTimeline('group')">{{ui.planboard.group}}</button>
+                  <button type="button" 
+                          ng-model="timeline.current.layouts.members" 
+                          class="btn {{(timeline.current.layouts.members==true) && 'active'}}" 
+                          ng-click="requestTimeline('members')"
+                          ng-show="(app.resources.role < 3) || timeline.config.layouts.members">{{ui.planboard.members}}
+                  </button>
+                </div>
+                <!-- end timeline layout manager -->
+
+              </div>
+              <!--end groups members controls -->
+
+            </div>
+            <!-- end timeline-toolbar -->
+
+            <!-- timeline controls -->
+            <div class="row-fluid" id="timeline-controls" ng-controller="timeline-navigation">
+
+
+                <!-- core timeline controls -->
+                <div class="pull-left" style="margin-top: 10px">
+
+                    <!-- dateranger -->
+                    <div class="control-group pull-left" style="margin-right: 10px;">
+                        <input type="text"
+                               style="width: 190px"
+                               name="daterange"
+                               ng-model="daterange"
+                               daterangepicker="">
+                        <i class="icon-calendar" style="position: relative; margin: -3px 0 0 -24px;"></i>
+                    </div>
+                    <!-- end dateranger -->
+
+                    <!-- timeline scopers -->
+                    <div class="btn-group pull-left" style="margin-right: 5px">
+                        <button type="button"
+                                ng-model="timeline.scope.day"
+                                class="btn {{(timeline.scope.day==true) && 'active'}}"
+                                ng-click="timelineScoper('day')">{{ui.planboard.day}}</button>
+                        <button type="button"
+                                ng-model="timeline.scope.week"
+                                class="btn {{(timeline.scope.week==true) && 'active'}}"
+                                ng-click="timelineScoper('week')">{{ui.planboard.week}}</button>
+                        <button type="button"
+                                ng-model="timeline.scope.month"
+                                class="btn {{(timeline.scope.month==true) && 'active'}}"
+                                ng-click="timelineScoper('month')">{{ui.planboard.month}}</button>
+                    </div>
+                    <!-- end timeline scopers -->
+
+                    <!-- timeline navigation -->
+                    <div class="btn-group pull-left" style="margin-right: 5px">
+                        <button type="button"
+                                class="btn"
+                                ng-click="timelineBefore(timeline.scope)"><i class="icon-arrow-left"></i></button>
+                        <button type="button"
+                                class="btn"
+                                ng-click="timelineZoomIn()"><i class="icon-zoom-in"></i></button>
+                        <button type="button"
+                                class="btn"
+                                ng-click="timelineZoomOut()"><i class="icon-zoom-out"></i></button>
+                        <button type="button"
+                                class="btn"
+                                ng-click="timelineAfter(timeline.scope)"><i class="icon-arrow-right"></i></button>
+                    </div>
+                    <!-- end timeline navigation -->
+
+                </div>
+                <!-- end core timeline controls -->
+
+                <!-- range indicator -->
+                <div class="pull-right" style="text-align: right">
+                    <h4 style="font-weight: normal">
+                        {{timeline.range | rangeMainFilter}}<br>
+                        <!-- timeline scope info -->
+                        <div style="font-size: 15px; font-weight: lighter">
+                            <span>{{timeline | rangeInfoFilter}}</span>
+                        </div>
+                        <!-- end timeline scope info -->
+                    </h4>
+                </div>
+                <!-- end range indicator -->
+
+            </div>
+            <!-- end timeline controls -->
+
+
+
+
+
+
+
+            <hr>
+
+            <!-- timeline legenda content -->
+            <div class="legenda" ng-show="timeline.config.legendarer">
+
+              <div class="legenda-row">
+                <strong>{{ui.planboard.members}}</strong>
+                <ul>
+                  <li ng-repeat="(key, value) in timeline.config.states" class="legenda-{{value.className}}">
+                    <label>
+                      <div class="square"></div>
+                      <input  type="checkbox" 
+                              ng-click="alterLegenda(timeline.config.legenda)" 
+                              ng-model="timeline.config.legenda[key]">{{value.label}}
+                    </label>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="legenda-row last-legenda-row">
+                <strong>{{ui.planboard.groups}}</strong>
+                <ul>
+                  <li class="legenda-more">
+                    <label>
+                      <div class="square"></div>
+                      <input  type="checkbox" 
+                              ng-click="alterLegenda(timeline.config.legenda)" 
+                              ng-model="timeline.config.legenda.groups.more">{{ui.planboard.legendaLabels.morePeople}}
+                    </label>
+                  </li>
+                  <li class="legenda-even">
+                    <label>
+                      <div class="square"></div>
+                      <input  type="checkbox" 
+                              ng-click="alterLegenda(timeline.config.legenda)" 
+                              ng-model="timeline.config.legenda.groups.even">{{ui.planboard.legendaLabels.enoughPeople}}
+                    </label>
+                  </li>
+                  <li class="legenda-less">
+                    <label>
+                      <div class="square"></div>
+                      <input  type="checkbox" 
+                              ng-click="alterLegenda(timeline.config.legenda)" 
+                              ng-model="timeline.config.legenda.groups.less">{{ui.planboard.legendaLabels.lessPeople}}
+                    </label>
+                  </li>
+                </ul>
+              </div>
+
+              <hr>
+            </div>
+            <!-- end timeline legenda content -->
+            
+            <!-- user timeline -->
+            <div id="mainTimeline"></div>
+            <!-- end user timeline -->
+
+          </div>
+          <!-- end timeline -->
+
+          <hr>
+
+          <!-- planbaord footer -->
+          <p>
+            <small class="pull-left">
+              <span class="text-warning">{{ui.planboard.lastSyncTime}}</span>&nbsp;
+              <span class="muted">{{data.synced | nicelyDate}}</span>
+            </small>
+            <small class="pull-right">
+              <span class="text-warning">{{ui.planboard.dataRangeStart}}</span>
+              <span class="muted">{{data.periods.start | nicelyDate}}</span>
+              &nbsp;|&nbsp;
+              <span class="text-warning">{{ui.planboard.dataRangeEnd}}</span>
+              <span class="muted">{{data.periods.end | nicelyDate}}</span>
+            </small>
+          </p>
+          <!-- end planbaord footer -->
+
+        </div>
+        <!-- end timelines -->
+
+
+
+
+
+
+
+
+        <!-- statistics -->
+        <div class="tab-pane" id="statisticsTab">
+
+          <!-- timeline toolbar -->
+          <div id="timeline-toolbar">
+
+            <!-- groups members controls -->
+            <div class="pull-left">
+
+              <!-- groups list -->
+              <select ng-model="timeline.current.group" 
+                      ng-options="group.uuid as group.name for group in groups"
+                      ng-selected="timeline.current.group"
+                      ng-change="requestTimeline()">
+              </select>
+              <!-- end groups list -->
+
+              <!-- divisions list -->
+              <select ng-model="timeline.current.division" 
+                      ng-options="division.id as division.label for division in divisions"
+                      ng-selected="timeline.current.division"
+                      ng-change="requestTimeline()"
+                      ng-show="divisions.length > 0">
+              </select>
+              <!-- end divisions list -->
+
+            </div>
+
+            <!-- groups members controls -->
+            <div class="pull-right">
+
+              <!-- timeline layout manager -->
+              <div  class="btn-group">
+                <button type="button" 
+                        ng-model="timeline.current.layouts.group" 
+                        class="btn {{(timeline.current.layouts.group==true) && 'active'}}" 
+                        ng-click="requestTimeline('group')">{{ui.planboard.group}}</button>
+                <button type="button" 
+                        ng-model="timeline.current.layouts.members" 
+                        class="btn {{(timeline.current.layouts.members==true) && 'active'}}" 
+                        ng-click="requestTimeline('members')"
+                        ng-show="(app.resources.role < 3) || timeline.config.layouts.members">{{ui.planboard.members}}
+                </button>
+              </div>
+              <!-- end timeline layout manager -->
+
+            </div>
+            <!--end groups members controls -->
+
+          </div>
+          <!-- end timeline toolbar -->
+
+          <hr>
+
+          <!-- timeline legenda content -->
+          <div class="legenda">
+            <div class="legenda-row">
+              <strong>{{ui.planboard.members}}</strong>
+              <ul>
+                <li ng-repeat="(key, value) in timeline.config.states" class="legenda-{{value.className}}">
+                  <label><div class="square"></div>{{value.label}}</label>
+                </li>
+              </ul>
+            </div>
+            <div class="legenda-row last-legenda-row">
+              <strong>{{ui.planboard.groups}}</strong>
+              <ul>
+                <li class="legenda-more">
+                  <label><div class="square"></div>{{ui.planboard.legendaLabels.morePeople}}</label>
+                </li>
+                <li class="legenda-even">
+                  <label><div class="square"></div>{{ui.planboard.legendaLabels.enoughPeople}}</label>
+                </li>
+                <li class="legenda-less">
+                  <label><div class="square"></div>{{ui.planboard.legendaLabels.lessPeople}}</label>
+                </li>
+              </ul>
+            </div>
+            <hr>
+          </div>
+          <!-- end timeline legenda content -->
+
+          <!-- statistics -->
+          <div id="stats">
+
+            <!-- group charts -->
+            <div id="groupStats">
+              <div id="groupPie"></div>
+              
+              <div class="groupStatInfo">
+                <h3>{{data.aggs.id | groupIdToName}}</h3>
+                <hr>
+                <ul>
+                  <li>
+                    <div class="ratios more">
+                      <span class="ratio">{{data.aggs.ratios.more}}</span>
+                      <span class="percentage">%</span>
+                    </div>
+                    <div class="info">                    
+                      <h4>{{ui.planboard.statPeopleMore}}</h4>
+                      <h5>{{data.aggs.durations.more | calculateTimeInDays}}</h5>&nbsp;
+                      <small class="muted">{{ui.planboard.statDays}}</small>,&nbsp;
+                      <h5>{{data.aggs.durations.more | calculateTimeInHours}}</h5>&nbsp;
+                      <small class="muted">{{ui.planboard.statHours}}</small>,&nbsp;
+                      <h5>{{data.aggs.durations.more | calculateTimeInMinutes}}</h5>&nbsp;
+                      <small class="muted">{{ui.planboard.statMinutes}}</small>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="ratios even">
+                      <span class="ratio">{{data.aggs.ratios.even}}</span>
+                      <span class="percentage">%</span>
+                    </div>
+                    <div class="info">                    
+                      <h4>{{ui.planboard.statPeopleEven}}</h4>
+                      <h5>{{data.aggs.durations.even | calculateTimeInDays}}</h5>&nbsp;
+                      <small class="muted">{{ui.planboard.statDays}}</small>,&nbsp;
+                      <h5>{{data.aggs.durations.even | calculateTimeInHours}}</h5>&nbsp;
+                      <small class="muted">{{ui.planboard.statHours}}</small>,&nbsp;
+                      <h5>{{data.aggs.durations.even | calculateTimeInMinutes}}</h5>&nbsp;
+                      <small class="muted">{{ui.planboard.statMinutes}}</small>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="ratios less">
+                      <span class="ratio">{{data.aggs.ratios.less}}</span>
+                      <span class="percentage">%</span>
+                    </div>
+                    <div class="info">
+                      <h4>{{ui.planboard.statPeopleLess}}</h4>
+                      <h5>{{data.aggs.durations.less | calculateTimeInDays}}</h5>&nbsp;
+                      <small class="muted">{{ui.planboard.statDays}}</small>,&nbsp;
+                      <h5>{{data.aggs.durations.less | calculateTimeInHours}}</h5>&nbsp;
+                      <small class="muted">{{ui.planboard.statHours}}</small>,&nbsp;
+                      <h5>{{data.aggs.durations.less | calculateTimeInMinutes}}</h5>&nbsp;
+                      <small class="muted">{{ui.planboard.statMinutes}}</small>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+            <!-- end group charts -->
+
+            <!-- member bars -->
+            <div id="memberBars">
+              <ul>
+                <li ng-repeat="member in data.members">
+                  <h4>{{member.id | convertUserIdToName}}</h4>
+                  <div class="progress">
+                    <div  ng-repeat="stat in member.stats" 
+                          class="bar {{stat.state}}" 
+                          style="width: {{stat.ratio}}%;"></div>
+                  </div>
+                  <small class="muted">{{member.stats | convertRatios}}</small>
+                </li>
+              </ul>
+            </div>
+            <!-- end member bars -->
+
+          </div>
+          <!-- end statistics -->
+
+          <hr>
+
+          <!-- planbaord footer -->
+          <p>
+            <small class="pull-left">
+              <span class="text-warning">{{ui.planboard.lastSyncTime}}</span>&nbsp;
+              <span class="muted">{{data.synced | nicelyDate}}</span>
+            </small>
+            <small class="pull-right">
+              <span class="text-warning">{{ui.planboard.dataRangeStart}} </span>
+              <span class="muted">{{data.periods.start | nicelyDate}}</span>
+              &nbsp;|&nbsp;
+              <span class="text-warning">{{ui.planboard.dataRangeEnd}} </span>
+              <span class="muted">{{data.periods.end | nicelyDate}}</span>
+            </small>
+          </p>
+          <!-- end planbaord footer -->
+
+        </div>
+        <!-- end statistics -->
+
+
+
+      </div>
+      <!-- end tabs content -->
+
+
+
+    </div>
+  </div>
+  <!-- end timelines & statistics -->
+
+
+
+</section>

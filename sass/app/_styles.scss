@@ -1,0 +1,310 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak {
+  display: none;
+}
+
+ng\:form {
+  display: block;
+}
+
+html,body {
+  margin:0;
+  height: 100%;
+  min-height: 100%;
+}
+
+
+//body {
+//  background: url(../img/bg.jpg) repeat;
+//}
+
+
+a {
+  &:hover {
+    cursor: pointer
+  }
+}
+
+
+dl {
+  dt {
+    
+  }
+  dd {
+    margin-bottom: 15px;
+  }
+}
+
+
+.left-border-fix {
+  width: 1px; 
+  border-left: 1px solid red; 
+  z-index: 10000; 
+/*  position: absolute;*/
+  top: 0;
+  left: 0;
+  float: left;
+  display: block;
+  margin-left: -1px;
+}
+
+
+.greetings {
+  margin: 25px 0;
+}
+
+#watermark {
+  z-index: 1;
+  position: fixed;
+  bottom: 50px;
+  right: -10px;
+  z-index: 1;
+  width: 400px;
+  height: 400px
+}
+
+
+.label-natural,
+.badge-natural {
+  background-color: #433c2d;
+}
+
+
+.label-natural[href],
+.badge-natural[href] {
+  background-color: #342f23;
+}
+
+
+.label-more,
+.badge-more {
+  background-color: #415e6b;
+}
+
+
+.label-less,
+.badge-less {
+  background-color: #a0a0a0;
+}
+
+
+.label-even,
+.badge-even {
+  background-color: #9c1e0a;
+}
+
+
+.label-inset,
+.badge-inset {
+  background-color: #88b167;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.30);
+}
+
+
+.navbar {
+  .badge-success {
+    background-color: $btnSuccessBackground;
+  }
+
+}
+
+
+.modal-body {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin-bottom: 5px;
+
+      label {
+        font-weight: normal;
+        
+        input[type=checkbox] {
+          margin: -2px 3px 0 2px;
+        }
+      }
+    }
+  }
+}
+
+
+#versions {
+
+  .container-narrow {
+    margin: 0 auto;
+    max-width: 700px;
+
+    hr {
+      margin: 30px 0;
+    }
+  }
+
+  .jumbotron {
+    margin: 60px 0;
+    text-align: center;
+
+    h1 {
+      font-size: 72px;
+      line-height: 1;
+    }
+
+    .btn {
+      font-size: 21px;
+      padding: 14px 24px;
+    }
+  }
+
+  .marketing {
+    margin: 60px 0;
+
+    p + h4 {
+      margin-top: 28px;
+    }
+  }
+}
+
+
+#groups-wish {
+  form {
+    margin-top: 15px;
+
+    input[type=text] {
+      margin-right: 15px;
+    }
+
+    button {
+      margin-right: 5px;
+    }
+  }
+}
+
+
+#mobile-status-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 5000;
+  background-color: #433c2d;
+  color: white;
+  padding: 5px;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
+
+  small {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 11px;
+  }
+}
+
+
+// .navbar, #footer, #notification, #mobile-status-bar {
+//   display: none;
+// }
+
+
+#scheaduler-pane {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border: 1px solid #e5e5e5;
+
+  header {
+    h4 {
+      display: inline;
+    }
+
+    div.pull-right {
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .scheadule {
+    overflow: hidden;
+    margin-bottom: 5px;
+  }
+
+  .timer {
+    float: left;
+    display: inline;
+    margin-right: 10px;
+
+    .icon-time {
+      margin-top: -3px;
+    }
+  }
+
+  ul {
+    list-style: none;
+    overflow: hidden;
+    margin: 0 10px 0 0;
+    padding: 4px 0 4px 10px;
+    display: inline;
+    float: left;
+    background-color: white;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+    box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+    box-sizing: border-box;
+    color: rgb(85, 85, 85);
+    height: 30px;
+    line-height: 20px;
+    min-height: 30px;
+    vertical-align: middle;
+
+    li {
+      display: inline;
+      float: left;
+      margin-right: 15px;
+      label {
+        font-weight: normal;
+        font-size: 11px;
+      }
+      input[type=checkbox] {
+        margin-top: -3px;
+      }
+      i.icon-calendar {
+        margin-right: -6px;
+      }
+    }
+  }
+
+  button.btn-danger {
+    margin-top: 2px;
+  }
+}
+
+
+
+.scheadule-icons {
+  width: 48px; 
+  height: 24px; 
+  overflow: hidden;
+
+  div {
+    float: left;
+    display:inline;
+    width: 24px;
+    height: 24px;
+
+    .entypo {
+      line-height: 24px;
+      font-size: 32px;
+    }
+
+    .sms {
+      margin-left: 5px;
+    }
+
+    .mail {
+      margin-left: 2px;
+    }
+  }
+}

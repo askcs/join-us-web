@@ -1,0 +1,244 @@
+<section id="dashboard">
+
+  <!-- <div class="alert alert-block" ng-hide="config.notifications.webkit.app || !config.notifications.webkit.user || !browser.webkit">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    WebPaige can display notifications. Would you like to turn that on?
+    <button id="activation" class="btn btn-small btn-success" ng-click="allowWebkitNotifications()" data-dismiss="alert">Activate Notifications</button>
+  </div> -->
+
+  <div class="well well-large greetings">
+    <h2>{{ui.dashboard.welcome}}, {{app.resources.name}}</h2>
+  </div>
+
+  <!-- row-fluid -->
+  <div class="row-fluid">
+
+      <!-- pie charts for groups -->
+      <div class="widget {{(!browser.mobile) && 'span9' || 'span12'}}">
+
+        <div class="head">
+          <h4>{{ui.dashboard.overview}}</h4>
+          <button class="btn btn-small" 
+                  bs-popover="'dist/views/dashboard-pies.html'" 
+                  data-placement="{{(browser.mobile) && 'left' || 'bottom'}}"
+                  data-title="Overzicht instellingen"><i class="icon-cog"></i></button>
+        </div>
+        <hr>
+
+        <p ng-show="loading.pies">{{ui.dashboard.groupOverviews}}</p>
+
+        <!-- pie loop -->
+        <ul id="pies" ng-hide="loading.pies">
+          <li ng-repeat="pie in pies | orderBy:'shortages.total':true">
+
+            <header>
+              <h4>{{pie.name}}</h4>
+              <!-- <button type="button" class="close">&times;</button> -->
+            </header>
+
+            <div class="blocks">
+              <div class="span4">
+                <div class="block">
+                  <div class="icon">
+                    <div class="scoreboard {{pie.state.cls}}">
+                      <span class="state">{{pie.state.diff + pie.state.wish}}</span>
+                      <span class="seperator">/</span>
+                      <span class="wish">{{pie.state.wish}}</span>
+                    </div>
+                  </div>
+                  <div class="body">
+                    <h3>{{ui.dashboard.currentState}}</h3>
+                    <hr>
+                    <h5>{{pie.state.start}}</h5>&nbsp;
+                    <small class="muted">van</small>
+                    <br>
+                    <h5>{{pie.state.end}}</h5>&nbsp;
+                    <small class="muted">tot</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="span4">
+                <div class="block">
+                  <div class="icon">
+                    <div id="weeklyPieCurrent-{{pie.id}}" class="pie"></div>
+                  </div>
+                  <div class="body">
+                    <h3>{{ui.dashboard.thisWeek}}</h3>
+                    <hr>
+                    <small class="muted">{{pie.weeks.current.start.date}} / {{pie.weeks.current.end.date}}</small>
+                    <br>
+                    <h5>{{pie.weeks.current.ratios.more}}%</h5>&nbsp;
+                    <small class="muted">{{ui.dashboard.statMore}}</small>,&nbsp;
+                    <h5>{{pie.weeks.current.ratios.even}}%</h5>&nbsp;
+                    <small class="muted">{{ui.dashboard.statEven}}</small>,&nbsp;
+                    <h5>{{pie.weeks.current.ratios.less}}%</h5>&nbsp;
+                    <small class="muted">{{ui.dashboard.statLess}}</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="span4">
+                <div class="block">
+                  <div class="icon">
+                    <div id="weeklyPieNext-{{pie.id}}" class="pie"></div>
+                  </div>
+                  <div class="body">
+                    <h3>{{ui.dashboard.nextWeek}}</h3>
+                    <hr>
+                    <small class="muted">{{pie.weeks.next.start.date}} / {{pie.weeks.next.end.date}}</small>
+                    <br>
+                    <h5>{{pie.weeks.next.ratios.more}}%</h5>&nbsp;
+                    <small class="muted">{{ui.dashboard.statMore}}</small>,&nbsp;
+                    <h5>{{pie.weeks.next.ratios.even}}%</h5>&nbsp;
+                    <small class="muted">{{ui.dashboard.statEven}}</small>,&nbsp;
+                    <h5>{{pie.weeks.next.ratios.less}}%</h5>&nbsp;
+                    <small class="muted">{{ui.dashboard.statLess}}</small>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <footer>
+
+              <div class="shorter" ng-show="pie.shortages.current.length > 0 || pie.shortages.next.length > 0">
+                <div class="btn-group">
+                  <!-- <button class="btn btn-mini"
+                          ng-click="shortageHolders['shortages-' + pie.id] = true"
+                          ng-hide="shortageHolders['shortages-' + pie.id]">
+                          Tekorten ({{pie.shortages.total}}) <i class="icon-chevron-down"></i>
+                  </button>
+                  <button class="btn btn-mini"
+                          ng-click="shortageHolders['shortages-' + pie.id] = false"
+                          ng-show="shortageHolders['shortages-' + pie.id]">
+                          Tekorten ({{pie.shortages.total}}) <i class="icon-chevron-up"></i>
+                  </button> -->
+                </div>
+              </div>
+
+              <!-- <span class="remove">{{shortageHolders['shortages-' + pie.id]}}</span> -->
+
+              <!-- <div id="shortages-{{pie.id}}" 
+                    class="shortages span12" 
+                    ng-show="pie.weeks.current.shortages.length > 0 || pie.weeks.next.shortages.length > 0"
+                    ng-hide="shortageHolders['shortages-' + pie.id] == false">
+
+                <div class="span4 offset4" ng-show="pie.shortages.current.length > 0">
+                  <h4>This week shortages ({{pie.shortages.current.length}})</h4>
+                  <ul>
+                    <li ng-repeat="shortage in pie.shortages.current">
+                      <span class="label">{{shortage.diff}}</span>
+                      <h5>{{shortage.start * 1000 | nicelyDate}}</h5> 
+                      <small class="muted">van</small>, 
+                      <h5>{{shortage.end * 1000 | nicelyDate}}</h5> 
+                      <small class="muted">tot</small>
+                      <button class="btn btn-mini pull-right"><i class="icon-chevron-right"></i></button>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div class="span4" ng-show="pie.shortages.next.length > 0">
+                  <h4>Next week shortages ({{pie.shortages.next.length}})</h4>
+                  <ul>
+                    <li ng-repeat="shortage in pie.shortages.next">
+                      <span class="label">{{shortage.diff}}</span>
+                      <h5>{{shortage.start * 1000 | nicelyDate}}</h5> 
+                      <small class="muted">van</small>, 
+                      <h5>{{shortage.end * 1000 | nicelyDate}}</h5> 
+                      <small class="muted">tot</small>
+                      <button class="btn btn-mini pull-right"><i class="icon-chevron-right"></i></button>
+                    </li>
+                  </ul>
+                </div>
+              </div> -->
+
+            </footer>
+
+          </li>
+        </ul>
+        <!-- end pie loop -->
+
+        <hr class="lastline" ng-hide="loading.pies">
+        <p ng-hide="loading.pies">
+          <small class="pull-right">
+            <span class="text-warning">{{ui.dashboard.periods}}: </span>
+            <span class="muted">
+              &nbsp;
+              {{periods.start}}
+              &nbsp;|&nbsp;
+              {{periods.end}}
+            </span>
+          </small>
+        </p>
+
+      </div>
+      <!-- end pie charts for groups -->
+
+      <!-- announcements sidebar -->
+      <div class="widget {{(!browser.mobile) && 'span3' || 'span12'}}"
+            style="{{(browser.mobile) && 'margin-left: 0'}}"
+            ng-show="config.profile.p2000.status">
+
+        <div class="head">
+          <h4>{{ui.dashboard.announcements}}</h4>
+          <!-- <button class="btn btn-small"><i class="icon-cog"></i></button> -->
+        </div>
+        <hr>
+
+        <p ng-show="loading.alerts">{{ui.dashboard.loadingP2000}}</p>
+
+        <!-- p2000 loop -->
+        <ul id="announcements" ng-hide="loading.alerts">
+          <li ng-show="alarms.list.length < 1">
+            {{ui.dashboard.noP2000}}
+          </li>
+          <li ng-repeat="alarm in alarms.list">
+            <table>
+              <tr>
+                <td class="first">
+                  <span class="prio label label-important"  ng-show="alarm.prio.1">PRIO 1</span>
+                  <span class="prio label label-warning"    ng-show="alarm.prio.2">PRIO 2</span>
+                  <span class="prio label label-info"       ng-show="alarm.prio.3">PRIO 3</span>
+                  <span class="prio label label-inverse"    ng-show="alarm.prio.test">PROEFALARM</span>
+                </td>
+                <td class="last">
+                  <p>{{alarm.body}}</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <small class="muted"><i>{{alarm.msgCode}}</i></small>
+                </td>
+                <td>
+                  <span class="label label-natural pull-right">{{alarm.day}} {{alarm.time}}</span>
+                </td>
+              </tr>
+            </table>
+          </li>
+        </ul>
+        <!-- end p2000 loop -->
+
+        <hr class="lastline">
+        <p ng-show="alarms.list.length > 4">
+          <small>
+            <a class="pull-right" ng-click="toggle(more.status)">{{more.text}}</a>
+          </small>
+        </p>
+
+        <!-- p2000 footer -->
+        <p>
+          <small class="pull-left">
+            <span class="text-warning">{{ui.planboard.lastSyncTime}}</span>&nbsp;
+            <span class="muted">{{synced.alarms | nicelyDate}}</span>
+          </small>
+        </p>
+        <!-- end p2000 footer -->
+
+      </div>
+      <!-- end announcements sidebar -->
+
+  </div>
+  <!-- end row-fluid -->
+
+</section>

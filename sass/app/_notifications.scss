@@ -1,0 +1,42 @@
+#alertDiv {
+  display: none;
+}
+
+
+#preloader {
+  display: none;
+}
+
+
+#loading {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  text-align: center;
+
+  p {
+    padding-top: 65px;
+    text-align: center;
+    color: #a19781;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+    font-size: 18px; 
+  }
+
+  span.entypo {
+    display: block;
+    /*height: 160px;*/
+    color: #a19781;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+    font-size: 20em;
+  }
+}
+
+
+#notification {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  margin-left: -175px;
+  width: 300px;
+  z-index: 200;
+}
